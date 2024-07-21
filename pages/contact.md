@@ -27,17 +27,23 @@ I'm enough aged to still use `IRC` networks and you can contact me on:
  * [OFTC](https://www.oftc.net/) (as `frankie` on multiple Debian official channels)
  * [LiberaChat ](https://libera.chat/) (as `frankie` on `#linux-it` and other channels) 
 
-## Discord
+## Matrix
 
 My user name is:
 
- * `fpl5466`
+* `@frankie:fsfe.org`
 
 ## Telegram
 
 My user name is:
 
- * `@frankie-is-a-geek`
+ * `@frankie_is_a_geek`
+
+## Discord
+
+My user name is:
+
+ * `fpl5466`
 
 If you're into social media, you can even follow me on
 [Mastodon](https://floss.social/@gisgeek).
