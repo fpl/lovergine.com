@@ -14,7 +14,7 @@ that restarting a personal website in 2024 could be a not so weird idea.
 One of the motivations is probably connected to the general idea that abandoning
 corporate social networks and regaining possession of our digital identities is
 nowadays the way to go. The [indieweb](https://en.wikipedia.org/wiki/IndieWeb)
-is a return to the original idea of the Word Wide Web and a duty of all of us
+is a return to the original idea of the World Wide Web and a duty of all of us
 geeks of the early days of the Internet.
 
 For the same reason, the only social network I'm now actively using 
