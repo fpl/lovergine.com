@@ -28,6 +28,7 @@
 ;;;
 
 (setlocale LC_ALL "C")
+(fluid-set! %default-port-encoding "UTF-8")
 
 (use-modules (haunt asset)
              (haunt builder blog)
