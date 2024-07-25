@@ -38,5 +38,5 @@ serve: site/index.html
 	haunt serve --config=$(CONFIG) --watch --port=$(PORT)
 
 publish: site/index.html
-	rsync -avzz site/ rivendell.lovergine.com:/var/www/html/.
+	rsync -avczz site/ rivendell.lovergine.com:/var/www/html/.
 
