@@ -31,7 +31,8 @@ are my goals for the next short future.
 
 ## Jamstack
 
-First of all, I decided almost immediately to run a _jamstack_ system for
+First of all, I decided almost immediately to run a [_jamstack system_]
+(https://en.wikipedia.org/wiki/Jamstack) for
 generating static pages starting from simple text documents. Such kind of
 system is more than enough for my purpose and even for a lot of web sites 
 out there that instead use [Wordpress](https://wordpress.org/) or other exotic [content management
@@ -41,7 +42,7 @@ systems](ihttps://en.wikipedia.org/wiki/Content_management_system) with a
 ## Lisp and Scheme
 
 Once decided for a _jamstack_ the possible choices are embarrassingly 
-numerous. but as a few people could know, I always prefer by age and inclination 
+numerous, but as a few people could know, I always prefer by age and inclination 
 unconventional _niche_ solutions for my personal stuff. So, why not taking in 
 consideration a family of languages that last year I decided to go in detail 
 and never touched before? That would be the perfect occasion to motivate myself
