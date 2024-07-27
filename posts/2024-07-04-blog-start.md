@@ -32,7 +32,7 @@ are my goals for the next short future.
 ## Jamstack
 
 First of all, I decided almost immediately to run a [_jamstack system_]
-(https://en.wikipedia.org/wiki/Jamstack) for
+(https://jamstack.org/what-is-jamstack/) for
 generating static pages starting from simple text documents. Such kind of
 system is more than enough for my purpose and even for a lot of web sites 
 out there that instead use [Wordpress](https://wordpress.org/) or other exotic [content management
