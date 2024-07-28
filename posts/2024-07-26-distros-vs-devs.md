@@ -60,6 +60,21 @@ deployment to the end users.
 
 ## Hubs for end-users
 
+Talking about common users, thanks to new container-based systems tought for that - such as
+flatpak, snap or appimage - even ordinary users now can use programs that are not more
+strictly depending on distribution package managers. For end users, those are the equivalent of Windows
+installer in the Linux environments. The installation of new programs or sub-systems is now
+simplified: no building from sources, backporting and other more technical workflows. Just install
+and update the latest product kindly made available by multiple upstream teams.
+
+It seems a new ideal development and user world for the Linux ecosystems, at least apparently.
+Probably it is so for advanced and self-aware users, but ...
+
+_I felt a great disturbance in the Force, as if millions of voices suddenly cried out in terror and 
+were suddenly silenced. I fear something terrible has happened (Obi-Wan Kenobi)._
+
+## The splintering of the Linux ecosystems
+
 
 
 ## Who is responsible of the whole supply chain?
