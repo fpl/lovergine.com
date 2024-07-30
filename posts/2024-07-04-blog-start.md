@@ -4,7 +4,7 @@ tags: haunt, guile
 summary: I started to write blogging notes with Haunt
 ---
 
-A long time ago, in a galaxy far, far away... I used to have a personal home
+_A long time ago, in a galaxy far, far away..._ I used to have a personal home
 page hosted somewhere. That was one of many other side projects of my life.  I
 discovered some years ago that having multiple failed side projects along the
 way is a common experience for geeks and for many non-geek people, too. For
