@@ -3,6 +3,7 @@
   --bg: #fbfbfb;
   --a: #5b6ee1;
   --v: #306082;
+  --d: #666;
 }
 
 body {
@@ -20,6 +21,7 @@ body {
         --bg: #151718;
         --a: #e8e6e3;
         --v: #7faed0;
+        --d: #a8a095;
     }
 }
 
@@ -179,7 +181,7 @@ footer {
 .date {
     margin-top: -1rem;
     margin-bottom: 2rem;
-    color: #666;
+    color: var(--d);
 }
 
 .post img, .centered-image {
