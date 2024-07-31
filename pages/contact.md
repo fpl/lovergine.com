@@ -43,7 +43,7 @@ My user name is:
 
 My user name is:
 
- * `fpl5466`
+ * `frankie.is.a.geek`
 
 If you're into social media, you can even follow me on
 [Mastodon](https://floss.social/@gisgeek).
