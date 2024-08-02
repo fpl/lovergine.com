@@ -54,7 +54,7 @@ values considered _standard thinking_ overseas. I don't even know
 if the tentative regulation policies here in Europe will succeed in creating
 a better and respectful network.
 
-Morever, in many countries the Internet is limited and under the control/monitoring of central authorities, and I'm not
+Moreover, in many countries the Internet is limited and under the control/monitoring of central authorities, and I'm not
 talking only about North Korea, China, Russia, Iran, or other nations with some known issues
 in accessing the network. As we all discovered in the immediate past, even the so-called free
 democracies [show their fallacies](https://en.wikipedia.org/wiki/Edward_Snowden) from time to time. 
