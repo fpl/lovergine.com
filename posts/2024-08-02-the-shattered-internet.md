@@ -7,7 +7,7 @@ summary: The problem with the Internet as it has become
 I recently finished reading [a book published one year
 ago](https://www.bollatiboringhieri.it/libri/vittorio-bertola-internet-fatta-a-pezzi-9788833942018/),
 written by [Vittorio Bertola](https://bertola.eu/) and [Stefano Quintarelli](https://en.wikipedia.org/wiki/Stefano_Quintarelli). 
-Unfortunately, It is only available in Italian, but its title perfectly encloses all the topics
+Unfortunately, it is only available in Italian, but its title perfectly encloses all the topics
 it covers: _The shattered Internet: digital sovereignty, nationalisms, and big
 techs_.  Like me, Vittorio and Stefano are among the relatively few early users and
 participants of the primeval internet network of the 90s, even before the World
