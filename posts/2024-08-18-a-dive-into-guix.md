@@ -62,7 +62,8 @@ The Guix free-software-only system has some interesting characteristics, includi
 of `shepherd` as an alternative Guile-based _init system_ and the rolling-on distribution
 style. The non-FHS basic organization of the filesystem could also pose some problems
 to install software that are strictly dependent on that, that's for sure a good reason
-to use Guix-on-Debian instead of Guix-the-system only.
+to use Guix-on-Debian instead of Guix-the-system only. That issue is also partially mitigated
+by a combination of a container technology support, and an FHS emulation layer.
 
 In my opinion, the whole thing is quite interesting for building development environments 
 and exploring reproducible deployment systems.
@@ -107,7 +108,8 @@ The main resources about Guix are [the Reference Manual](https://guix.gnu.org/ma
 and [The Cookbook](https://guix.gnu.org/en/cookbook/en/html_node/), of course.
 I found some interesting non-trivial articles about Guix and its internals on some _indie blogs_
 here listed:
- - https://systemcrafters.net/craft-your-system-with-guix/
- - https://www.futurile.net/archives.html
- - https://github.com/techenthusiastsorg/awesome-guix
+ - [https://systemcrafters.net/craft-your-system-with-guix/](https://systemcrafters.net/craft-your-system-with-guix/)
+ - [https://www.futurile.net/archives.html](https://www.futurile.net/archives.html)
+ - [https://github.com/techenthusiastsorg/awesome-guix](https://github.com/techenthusiastsorg/awesome-guix)
+ - [https://hpc.guix.info/](https://hpc.guix.info/)
 
