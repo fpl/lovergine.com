@@ -106,7 +106,7 @@ alternative/integration to the ubiquitous containers, an aspect to deeply explor
 
 The main resources about Guix are [the Reference Manual](https://guix.gnu.org/manual/en/html_node/) 
 and [The Cookbook](https://guix.gnu.org/en/cookbook/en/html_node/), of course.
-I found some interesting non-trivial articles about Guix and its internals on some _indie blogs_
+I found some interesting non-trivial articles about Guix and its internals on some _indie sites_
 here listed:
  - [https://systemcrafters.net/craft-your-system-with-guix/](https://systemcrafters.net/craft-your-system-with-guix/)
  - [https://www.futurile.net/archives.html](https://www.futurile.net/archives.html)
