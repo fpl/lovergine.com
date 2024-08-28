@@ -121,11 +121,11 @@
               (link (@ (rel "alternate")
                    (type "application/rss+xml")
                    (title "lovergine.com")
-                   (href "/feed.xml")))
+                   (href "/rss-feed.xml")))
               (link (@ (rel "alternate")
                    (type "application/atom+xml")
                    (title "lovergine.com")
-                   (href "/atom.xml")))
+                   (href "/feed.xml")))
 
               (title ,(string-append title " — " (site-title site)))
               ,(stylesheet "reset")
