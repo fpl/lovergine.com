@@ -109,7 +109,7 @@ to various Guile build modules. Even, it is possible to run Guix-the-system
 in a _container_ (or a _virtual machine_), to use the host system just as a basic
 platform and create Guix-based services and applications on top.
 
-But this will be the topics for other posts...
+But those will be the topics for other posts...
 
 ## References
 
