@@ -117,3 +117,4 @@ But those will be the topics for other posts...
  - [https://guix.gnu.org/en/blog/2020/grafts-continued/](https://guix.gnu.org/en/blog/2020/grafts-continued/)
  - [https://guix.gnu.org/en/manual/devel/en/html_node/Managing-Patches-and-Branches.html](https://guix.gnu.org/en/manual/devel/en/html_node/Managing-Patches-and-Branches.html)
  - [https://guix.gnu.org/manual/en/html_node/Complex-Configurations.html](https://guix.gnu.org/manual/en/html_node/Complex-Configurations.html)
+ - [https://www.futurile.net/2023/05/01/guix-publish-caching-substitution-server/](https://www.futurile.net/2023/05/01/guix-publish-caching-substitution-server/)
