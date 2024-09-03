@@ -106,7 +106,7 @@ configuration of the host cannot be expressed in a synthetic way as a
 Scheme script. That said, it is perfectly possible to use Guix as
 a development environment for multiple languages ecosystems, thanks
 to various Guile build modules. Even, it is possible to run Guix-the-system
-in a container (or a _virtual machine_), to use the host system just as a basic
+in a _container_ (or a _virtual machine_), to use the host system just as a basic
 platform and create Guix-based services and applications on top.
 
 But this will be the topics for other posts...
