@@ -73,8 +73,7 @@ provisioning time. That is a requirement if the box would be exposed on public
 network, because the default private and public keys of Vagrant are publicly distributed.
 
 That is usually and automagically done by `vagrant` at first boot, but Guix is a read-only system
-and - as we will see - the Guix system is still not completely supported by
-Vagrant.
+and - as we will see - the Guix system is still not completely supported by Vagrant.
 
 ```
 ROOTFS_UUID=$(sudo blkid -o value /dev/nbd0p1|head -1)
