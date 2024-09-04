@@ -36,7 +36,7 @@ In this case, we will not need to use [Packer](https://www.packer.io/) to prepar
 
 ## Create a virtual disk image and partition it
 
-This is the straightforward part. Here, I'm using the `vdi` formati here, the native Virtualbox one, but the VMware `vmdk` format can be used instead.
+This is the straightforward part. Here, I'm using the `vdi` format, the native Virtualbox one, but the VMware `vmdk` format can be used instead.
 
 ```
  # load the Network Block Device module
@@ -64,8 +64,8 @@ This is the straightforward part. Here, I'm using the `vdi` formati here, the na
 
 Any valid configuration can be prepared, in this case this is a minimal one with
 a pair of changes for Vagrant. Specifically, a `vagrant` user in the `wheel`
-group needs to be prepared, and it should be able to run sudo without a
-password. Even, the unsecure Vagrant key is authorized to access via ssh. 
+group needs to be added, and it should be able to run sudo without a
+password. Even, the unsecure Vagrant key needs to be authorized to access via ssh. 
 
 Note that the key is added at the system level, and the root user has no password,
 which should be appropriately changed after the first run or, even better, at
