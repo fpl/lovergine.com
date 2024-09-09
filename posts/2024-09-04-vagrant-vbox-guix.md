@@ -246,6 +246,6 @@ so the second network interface shown in the previous `Vagrantfile` needs to be 
 A suitable support would need to be added as a proper 
 [vagrant plugin](https://developer.hashicorp.com/vagrant/docs/plugins/guests)
 as in the case of other operating systems and distributions. 
-So, good but not good enough, maybe it is matter for another post, even if I'm not exactly a Ruby language fun.
+So, good but not good enough, maybe it is matter for another post, even if I'm not exactly a Ruby language fan.
 
 In the meantime, have a good time by upping and destroying Vagrant Guix boxes.
