@@ -171,7 +171,7 @@ sudo qemu-nbd --disconnect /dev/nbd0
 ```
 ## Create a basic Virtualbox machine and attach the virtual disk to it
 
-Now, the virtual disk should already be registerd and visibile under your Virtualbox configuration.
+Now, the virtual disk should already be registered and visibile under your Virtualbox configuration.
 ```
 VDI_UUID=`vboxmanage showhdinfo guix-hd.vdi|grep ^UUID|awk '{print $2}'` && echo $VDI_UUID
 ```
