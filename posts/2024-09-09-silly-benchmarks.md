@@ -44,7 +44,7 @@ Some conclusions about this silly benchmarking experiment for dummies could be:
 ## Update
 
 [Jean Simard](https://github.com/woshilapin) pointed out after publication the missing optimization for the Rust code generation, which is similar to the C one,
-and indeed, that works for Rust too, so that performances of C, Java, and Rust becomes quite comparable.  In the meantime, I added Go and a couple of other Scheme implementations to the list of benchmarked languages. Not bad at all, so the resulting times are now the following ones:
+and indeed, that works for Rust too, so that performances of C, Java, and Rust become quite comparable.  In the meantime, I added Go and a couple of other Scheme implementations to the list of benchmarked languages. Not bad at all, so the resulting times are now the following ones:
 ```
 C: 0m0,001s
 Rust: 0m0,000s
