@@ -61,3 +61,6 @@ Python: 1m50,594s
 Python-range: 0m45,106s
 Tcl: 13m56,178s
 ```
+A final observation. As others have noticed, the optimized versions of C, Rust, and Java are too good to be true. Indeed, I checked the assembly translation of the C binary and found that _nop-loops_ are simply detected at compile time and cut away. I'm quite sure the same is true for the JVM translation, and maybe Go. 
+Again, the devil is in the details...
+

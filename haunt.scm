@@ -165,6 +165,13 @@ free culture works available under the " ,%cc-by-sa-link " license.")
              (div (@ (class "date"))
                   ,(date->string (post-date post)
                                  "~B ~d, ~Y"))
+             (div (@ (class "tags"))
+                   "Tags:"
+                   (ul ,@(map (lambda (tag)
+                                `(li (a (@ (href ,(string-append "/feeds/tags/"
+                                                                 tag ".xml")))
+                                        ,tag)))
+                              (assq-ref (post-metadata post) 'tags))))
              (div (@ (class "post"))
                   ,(post-sxml post))))
          #:collection-template
