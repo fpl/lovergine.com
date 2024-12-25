@@ -140,6 +140,7 @@
                             (li ,(link "home" "/"))
                             (li ,(link "about" "/about.html"))
                             (li ,(link "contact" "/contact.html"))
+                            (li ,(link "colophon" "/colophon.html"))
                             (li (@ (class "fade-text")) " ")))
                    ,@(if (not (equal? title "Recent Blog Posts")) '()
                        `((div (@ (class "right-box"))
