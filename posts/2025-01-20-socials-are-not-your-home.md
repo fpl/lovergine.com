@@ -33,7 +33,7 @@ subscription, of course, but it is less disturbing, at least.  Moreover, those
 networks also have been subject to data leaking from time to time, because of
 security issues or intentionally, and probably you would not appreciate that
 your personal data, telephone number, and the photo of your children/cats, or
-the photo of you drukend and naked in a party ten years ago walk publicly on the
+the photo of you drunk and naked in a party ten years ago walk publicly on the
 net.
 
 If this is something you are not available to accept, avoid any not-so-free
@@ -55,7 +55,7 @@ admin(s) move to other interests or costs exceed what the admin(s) are available
 to pay at the end of the day. They are probably not long-term solutions, but one
 can always move from one instance to another when things turn down. Simply, do
 not rely too much on them. And probably they will not solve the problem of
-the leaking of photos of you naked and drunked in a party of ten years ago: shit happens
+the leaking of photos of you naked and drunk in a party of ten years ago: shit happens
 even on those systems.
 
 If your major interest is ensuring privacy and security, all the protocols and
