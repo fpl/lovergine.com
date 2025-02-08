@@ -1,7 +1,7 @@
 title: Digital communities, toxicity and other drifts
 date: 2025-02-08 17:56
 tags: internet
-summary: About toxicity of big-co socials and fediverse.
+summary: About toxicity of big-co socials and Fediverse.
 ---
 
 In a [previous post](https://lovergine.com/socials-they-are-not-your-home.html), 
@@ -17,7 +17,7 @@ well-known prime-time socials because of the diffused toxicity of such
 environments, censorship, and other bad personal experiences in their use.
 Unfortunately, the past examples of newsgroups and IRC channels showed that even
 Mastodon profiles or Matrix stanzas are not an answer for such drifts of digital
-life. The new fediverse simply changed the user experience of communication
+life. The new Fediverse simply changed the user experience of communication
 services, not the core social experience of them.
 
 Nothing is truly different between modern Fediverse services and groups,
