@@ -126,6 +126,8 @@
                    (type "application/atom+xml")
                    (title "lovergine.com")
                    (href "/feed.xml")))
+              (link (@(rel "icon")
+                    (href "/favicon.png")))
 
               (title ,(string-append title " — " (site-title site)))
               ,(stylesheet "reset")
