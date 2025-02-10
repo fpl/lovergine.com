@@ -127,7 +127,7 @@
                    (title "lovergine.com")
                    (href "/feed.xml")))
               (link (@(rel "icon")
-                    (href "/favicon.png")))
+                    (href "/images/favicon.png")))
 
               (title ,(string-append title " — " (site-title site)))
               ,(stylesheet "reset")
