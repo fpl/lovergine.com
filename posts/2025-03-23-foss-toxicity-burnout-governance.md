@@ -93,5 +93,5 @@ FOSS project.
 
 One of the biggest problem nowadays is having such governance clearly
 established for life, but another is also ensuring that users and developers know its
-existnce and respect it, the two side of the same problem
+existnce and respect it, the two side of the same problem.
 
