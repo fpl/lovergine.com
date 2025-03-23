@@ -1,6 +1,6 @@
 title: FOSS toxicity, burnout and governance (again)
 date: 2025-03-23 15:40
-tags: internet
+tags: development, foss, governance
 summary: About toxicy in FOSS projects and missing rules for governance
 ---
 
