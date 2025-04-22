@@ -118,6 +118,7 @@
            `((doctype "html")
              (head
               (meta (@ (charset "utf-8")))
+              (meta (@ (lang "en")))
               (link (@ (rel "alternate")
                    (type "application/rss+xml")
                    (title "lovergine.com")
