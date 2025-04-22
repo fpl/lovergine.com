@@ -82,7 +82,7 @@ human side. We are much more complete and retain contexts that are wide, like a
 lifetime. A few people are terrified by this observation and seek refuge in
 negation or faithful certainties.
 
-We are complex organisms with probably still partially unknown processes that
+We are complex organisms with probably still partially known processes that
 govern our so-called intelligence, which is physically based on cells and energy
 in our brains, whether we like it or not. We found a way to mimic part of this
 complex process, with all limitations of the case. Is this intelligence? I don't
