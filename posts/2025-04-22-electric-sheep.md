@@ -65,7 +65,7 @@ add an acknowledgment in their software for such snippets? Or even for snippets
 taken from sites, blogs, books, or manuals without considering that such sources
 are even more restrictive for use and creating derivative work?  Isn't our full
 daily work the result of a long learning phase, based on our education and
-training by books, experiences of others ,as well as trial-and-error processes?
+training by books, experiences of others, as well as trial-and-error processes?
 
 That said, let me spend some words about the elephant in the room. In the
 context of AI and copyright law, the 'elephant' represents the complex nature of
