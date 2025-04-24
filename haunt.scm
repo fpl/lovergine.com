@@ -36,6 +36,7 @@
              (haunt builder rss)
              (haunt builder assets)
              (haunt builder flat-pages)
+             (haunt builder tag-pages) ;; New tag-pages module
              (haunt html)
              (haunt page)
              (haunt post)
@@ -144,6 +145,7 @@
                             (li ,(link "about" "/about.html"))
                             (li ,(link "contact" "/contact.html"))
                             (li ,(link "colophon" "/colophon.html"))
+                            (li ,(link "tags" "/tags/")) ;; Added tags link
                             (li (@ (class "fade-text")) " ")))
                    ,@(if (not (equal? title "Recent Blog Posts")) '()
                        `((div (@ (class "right-box"))
@@ -154,8 +156,7 @@
                            (p (@ (class "copyright"))
                               "Copyright (C) 2024-2025 Francesco P. Lovergine"
                               ,%cc-by-sa-button)
-                           (p "The text and images on this site are
-free culture works available under the " ,%cc-by-sa-link " license.")
+                           (p "The text and images on this site are free culture works available under the " ,%cc-by-sa-link " license.")
                            (p "This website is built with "
                               (a (@ (href "http://haunt.dthompson.us"))
                                  "Haunt")
@@ -172,9 +173,16 @@ free culture works available under the " ,%cc-by-sa-link " license.")
              (div (@ (class "tags"))
                    "Tags:"
                    (ul ,@(map (lambda (tag)
-                                `(li (a (@ (href ,(string-append "/feeds/tags/"
-                                                                 tag ".xml")))
-                                        ,tag)))
+                                `(li 
+                                  (a (@ (href ,(string-append "/tags/"
+                                                              tag ".html")))
+                                     ,tag)
+                                  " "
+                                  (a (@ (href ,(string-append "/feeds/tags/"
+                                                              tag ".xml"))
+                                        (class "feed-icon")
+                                        (title ,(string-append "Atom feed for tag: " tag)))
+                                     "[feed]")))
                               (assq-ref (post-metadata post) 'tags))))
              (div (@ (class "post"))
                   ,(post-sxml post))))
@@ -195,10 +203,25 @@ free culture works available under the " ,%cc-by-sa-link " license.")
                              (div (@ (class "date"))
                                   ,(date->string (post-date post)
                                                  "~B ~d, ~Y"))
+                             ;; Remove tag listing from index page summaries
                              (div (@ (class "post"))
                                   ,(first-paragraph post))
                              (a (@ (href ,uri)) "read more ➔"))))
-                   posts)))))
+                   posts)))
+         ;; Add pagination template for the tag pages
+         #:pagination-template
+         (lambda (site body previous-page next-page)
+           `(,@body
+             ,(if (or previous-page next-page)
+                  `(div (@ (class "pagination"))
+                        ,(if previous-page
+                             `(a (@ (href ,previous-page) (class "prev")) "← Previous")
+                             '())
+                        ,(if (and previous-page next-page) " — " "")
+                        ,(if next-page
+                             `(a (@ (href ,next-page) (class "next")) "Next →")
+                             '()))
+                  '())))))
 
 (define* (collections #:key (file-name "index.html"))
   `(("Recent Blog Posts" ,file-name ,posts/reverse-chronological)))
@@ -273,6 +296,13 @@ free culture works available under the " ,%cc-by-sa-link " license.")
   `(p (img
     (@ (src ,(string-append "/images/" src))))))
 
+;; Define the custom template function for flat pages
+(define (custom-flat-page-template site metadata body)
+  (let ((title (if (assq-ref metadata 'title)
+                  (assq-ref metadata 'title)
+                  "Untitled")))
+    ((theme-layout lovergine.com-theme) site title body)))
+
 (site #:title "frankie-tales"
       #:domain "lovergine.com"
       #:default-metadata
@@ -283,8 +313,15 @@ free culture works available under the " ,%cc-by-sa-link " license.")
                        (atom-feed)
                        (rss-feed)
                        (atom-feeds-by-tag)
+                       ;; Add tag-pages builder with no prefix (to fix the path issue)
+                       (tag-pages #:theme lovergine.com-theme
+                                 #:prefix #f
+                                 #:title "Posts Tagged")
+                       (tag-index #:theme lovergine.com-theme
+                                 #:prefix #f
+                                 #:title "All Tags")
                        (flat-pages "pages"
-                                   #:template (theme-layout lovergine.com-theme))
+                                   #:template custom-flat-page-template)
                        (static-directory "css")
                        (static-directory "fonts")
                        (static-directory "images")

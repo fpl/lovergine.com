@@ -257,3 +257,68 @@ footer {
 .hide {
     display: none;
 }
+
+/* Tag pages */
+
+/* Tags navigation */
+.tags ul {
+    display: inline;
+    padding-left: 0.5rem;
+    margin: 0;
+}
+
+.tags li {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    background-color: var(--a-bg);
+    border-radius: 3px;
+}
+
+.tags li a {
+    text-decoration: none;
+}
+
+.tags li a:hover {
+    text-decoration: underline;
+    background-color: transparent;
+}
+
+/* Tag index page styles */
+#tags-index {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#tags-index li {
+    margin: 0.5rem 0;
+    line-height: 1.5;
+}
+
+/* Feed icon styling */
+.feed-icon {
+    font-size: 80%;
+    color: var(--d);
+    margin-left: 0.3rem;
+}
+
+.feed-icon:hover {
+    color: var(--a);
+}
+
+/* Pagination controls */
+.pagination {
+    margin: 2rem 0;
+    padding: 1rem 0;
+    border-top: 1px solid #eee;
+    clear: both;
+    text-align: center;
+}
+
+.pagination .prev {
+    float: left;
+}
+
+.pagination .next {
+    float: right;
+}
