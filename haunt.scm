@@ -182,7 +182,7 @@
                                                               tag ".xml"))
                                         (class "feed-icon")
                                         (title ,(string-append "Atom feed for tag: " tag)))
-                                     "[feed]")))
+                                     "")))
                               (assq-ref (post-metadata post) 'tags))))
              (div (@ (class "post"))
                   ,(post-sxml post))))
