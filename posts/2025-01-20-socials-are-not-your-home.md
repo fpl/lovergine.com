@@ -1,6 +1,6 @@
 title: Socials, they are not your home. 
 date: 2025-01-20 17:00
-tags: internet
+tags: internet, digital rights, society
 summary: The social networks are not a nice place, time to depart from them
 ---
 

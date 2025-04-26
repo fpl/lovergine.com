@@ -1,6 +1,6 @@
 title: Digital communities, toxicity and other drifts
 date: 2025-02-08 17:56
-tags: internet
+tags: internet, society
 summary: About toxicity of big-co socials and Fediverse.
 ---
 

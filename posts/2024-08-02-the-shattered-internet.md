@@ -1,6 +1,6 @@
 title: The shattered Internet
 date: 2024-08-02 13:00
-tags: digital rights, rant, internet
+tags: books, digital rights, rant, internet
 summary: The problem with the Internet as it has become
 ---
 
