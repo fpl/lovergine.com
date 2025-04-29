@@ -1,6 +1,6 @@
 title: Playing with Vagrant, Virtualbox and Guix
 date: 2024-09-04 18:20
-tags: virtualbox, vagrant, guile
+tags: virtualbox, vagrant, guile, guix
 summary: Some notes about Guix in Virtualbox and Vagrant
 ---
 
