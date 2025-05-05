@@ -223,7 +223,7 @@
                         ,(if previous-page
                              `(a (@ (href ,previous-page) (class "prev")) "← Previous")
                              '())
-                        ,(if (and previous-page next-page) " — " "")
+                        ,(if (and previous-page next-page) "" "")
                         ,(if next-page
                              `(a (@ (href ,next-page) (class "next")) "Next →")
                              '()))
