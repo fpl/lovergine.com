@@ -357,20 +357,23 @@ footer {
 }
 
 /* Pagination controls */
+
 .pagination {
-    margin: 2rem 0;
-    padding: 1rem 0;
-    border-top: 1px solid #eee;
-    clear: both;
-    text-align: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 1.5rem 0;
+  position: relative;
 }
 
 .pagination .prev {
-    float: left;
+  text-align: left;
+  margin-right: auto;
 }
 
 .pagination .next {
-    float: right;
+  text-align: right;
+  margin-left: auto;
 }
 
 /* Logo styles */
