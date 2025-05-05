@@ -140,7 +140,11 @@
               (div (@ (class "container"))
                    (div (@ (class "nav"))
                         (ul 
-                            (li (h2 ,(site-title site)))
+                            (li (h2 (@ (class "site-title"))
+                                    (object (@ (class "site-logo")
+                                             (type "image/svg+xml")
+                                             (data "/images/logo.svg")))
+                                     ,(site-title site)))
                             (li ,(link "home" "/"))
                             (li ,(link "about" "/about.html"))
                             (li ,(link "contact" "/contact.html"))

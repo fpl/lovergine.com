@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
+  <style>
+    @media (prefers-color-scheme: dark) {
+      .logo-text, .balloon-outline { 
+        stroke: #FFFFFF;
+        fill: none;
+      }
+      .logo-text {
+        fill: #FFFFFF;
+      }
+    }
+    @media (prefers-color-scheme: light) {
+      .logo-text, .balloon-outline { 
+        stroke: #000000;
+        fill: none;
+      }
+      .logo-text {
+        fill: #000000;
+      }
+    }
+  </style>
+  
+  <!-- Speech Balloon with rounded corners and left-facing arrow (version 2) -->
+  <path class="balloon-outline" d="M25,10 h130 a15,15 0 0 1 15,15 v100 a15,15 0 0 1 -15,15 h-80 l-20,30 v-30 h-30 a15,15 0 0 1 -15,-15 v-100 a15,15 0 0 1 15,-15 z" 
+        stroke-width="3" />
+  
+  <!-- FT Text -->
+  <text class="logo-text" x="90" y="95" text-anchor="middle" font-family="Linux Biolinum, sans-serif" font-weight="bold" font-size="80">FT</text>
+</svg>

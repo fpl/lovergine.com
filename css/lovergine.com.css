@@ -372,3 +372,17 @@ footer {
 .pagination .next {
     float: right;
 }
+
+/* Logo styles */
+.site-logo {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin-right: 0.75rem;
+  vertical-align: middle;
+}
+
+.site-title {
+  display: flex;
+  align-items: center;
+}
