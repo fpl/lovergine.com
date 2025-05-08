@@ -221,11 +221,11 @@
              ,(if (or previous-page next-page)
                   `(div (@ (class "pagination"))
                         ,(if previous-page
-                             `(a (@ (href ,previous-page) (class "prev")) "← Previous")
+                             `(a (@ (href ,previous-page) (class "prev")) "← Newer")
                              '())
                         ,(if (and previous-page next-page) "" "")
                         ,(if next-page
-                             `(a (@ (href ,next-page) (class "next")) "Next →")
+                             `(a (@ (href ,next-page) (class "next")) "Older →")
                              '()))
                   '())))))
 
