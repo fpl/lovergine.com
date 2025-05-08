@@ -39,7 +39,7 @@ era.
 Who would try to write a web framework in Fortran or Cobol? Oh well, you
 probably don't know  [Fortran.io](https://fortran.io/), 
 an MVC web framework written in Fortran90. Or even any of the full-stack web
-framework written in Cobol. 
+frameworks written in Cobol. 
 So, it is better to say that for such languages, some applications are purely
 intellectual challenges, drafts, and sketches that no one would seriously(?)
 consider in production environments. That does not imply that such products are
