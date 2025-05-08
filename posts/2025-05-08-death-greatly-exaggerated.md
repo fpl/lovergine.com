@@ -81,12 +81,13 @@ applications, which became clearly not the case just a few years later. So what?
 Well, a grain of salt is due in any case, but what seems like the current
 primary choice could become a language of the past in just a few years.
 
-A complete developer should at least know at a non-trivial level at least a
+A complete developer should at least know at a non-trivial level a
 system programming language (e.g., C/C++, or Rust), as well as Python,
 JavaScript, and possibly also a pure functional one (e.g, Scheme, Clojure, or
 Haskell). Of course, moving from a non-trivial level to the guru level is a
 matter of time and experience, and it could also never happen in practice for
-each of them.
+each of them.  The more languages and programming paradigms you dominate, 
+the better for you.
 
 What will be the next dead language in the near future that still seems to be
 the current Big Thing? I have some suspicions, but I keep them to myself.
