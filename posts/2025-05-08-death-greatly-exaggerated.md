@@ -1,5 +1,6 @@
 title: About languages and tools: the walking dead and other legends
 date: 2025-05-08 13:00
+mastodon: https://floss.social/@gisgeek/114471725687692959
 tags: languages, development, tools, rant, technology 
 summary: About stability and death of languages and tools
 ---

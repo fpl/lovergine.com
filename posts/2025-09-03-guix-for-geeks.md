@@ -1,5 +1,6 @@
 title: Guix for geeks
 date: 2025-09-03 19:40
+mastodon: https://floss.social/@gisgeek/115141698554474701
 tags: guix, development, distributions
 summary: About current experiences with Guix environment
 ---

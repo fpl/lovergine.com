@@ -393,3 +393,24 @@ footer {
 h2.site-title {
   line-height: 1.2;
 }
+
+/* Mastodon comments section */
+.mastodon-comments {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    /* border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;*/
+    font-size: 90%;
+	text-align: center;
+}
+
+.mastodon-comments p {
+    margin: 0;
+    color: var(--d);
+}
+
+.mastodon-comments a {
+    color: var(--a);
+}

@@ -1,5 +1,6 @@
 title: Still, no silver bullet
 date: 2025-08-24 18:30
+mastodon: https://floss.social/@gisgeek/115084730614815374
 tags: books, development, enterprise, society, ai
 summary: About current AI role for software engineering and MM-M
 ---

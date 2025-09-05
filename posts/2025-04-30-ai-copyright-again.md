@@ -1,5 +1,6 @@
 title: Again about AI, copyright, uses and abuses
 date: 2025-04-29 20:00
+mastodon: https://floss.social/@gisgeek/114425856968862420
 tags: development, ai, aiad, copyright
 summary: About AI-aided and copyright
 ---

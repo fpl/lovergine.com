@@ -1,5 +1,6 @@
 title: Breaking dependencies on BigCos and a US centric IT world
 date: 2025-05-17 15:00
+mastodno: https://floss.social/@gisgeek/114523357948899385
 tags: internet, digital rights, society, rant, indie web
 summary: About escaping from BigCo dependencies for cloud and IT services
 ---

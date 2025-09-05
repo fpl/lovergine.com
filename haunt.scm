@@ -112,6 +112,21 @@
       ((head . tail)
        (loop tail (cons head result))))))
 
+(define (mastodon-comments-section post)
+  "Generate SXML for Mastodon comments section if POST has mastodon metadata."
+  (let ((mastodon-url (post-ref post 'mastodon)))
+    ;; Debug output
+    ;;(format #t "DEBUG: Post metadata: ~a~%" (post-metadata post))
+    ;;(format #t "DEBUG: Mastodon URL: ~a~%" mastodon-url)
+    (if mastodon-url
+        `(div (@ (class "mastodon-comments"))
+              (p "For comments, join the discussion on "
+                 (a (@ (href ,mastodon-url)
+                       (target "_blank")
+                       (rel "noopener noreferrer"))
+                    "Mastodon") "."))
+        '())))
+
 (define lovergine.com-theme
   (theme #:name "lovergine.com"
          #:layout
@@ -191,7 +206,8 @@
                                      "")))
                               (assq-ref (post-metadata post) 'tags))))
              (div (@ (class "post"))
-                  ,(post-sxml post))))
+                  ,(post-sxml post))
+             ,(mastodon-comments-section post)))
          #:collection-template
          (lambda (site title posts prefix)
            (define (post-uri post)
