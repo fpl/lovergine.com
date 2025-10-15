@@ -8,7 +8,7 @@ summary: Installing Debian on a USB stick for use with a Terramaster NAS
 I recently bought a basic NAS for home use. The NAS is a nice [Terramaster
 F2-425](https://shop.terra-master.com/it-it/products/f2-425), which is a very
 basic RAID1-only NAS with a decent CPU and 2.5Gb network. Terramaster allows
-users to either use their custom Linux-based TOS or install any other operating
+users to either use its custom Linux-based TOS or install any other operating
 system supported by the x86_64-based platform. Note that this model does not
 mount any NVME unit for the OS, as for the F2-424.
 
