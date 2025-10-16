@@ -88,10 +88,12 @@ chroot /mnt
 apt update
 apt upgrade -y
 apt install grub-efi-amd64 linux-image-amd64 ssh \
-        firmware-realtek xfsprogs rsync \
+        firmware-realtek xfsprogs rsync pmount \
+        gddrescue screen util-linux-extra bash-completion \
  	mdadm  parted smartmontools htop ntp unattended-upgrades sudo
 useradd -m -G sudo -s /bin/bash -C 'Your Name' your_username 
 passwd your_username
+adduser your_username plugdev
 apt install tzdata locales
 dpkg-reconfigure locales
 grub-install --target=x86_64-efi --force-extra-removable /dev/sde
