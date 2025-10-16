@@ -142,7 +142,7 @@ systemctl restart mdmonitor.service
 ```
 
 The network configuration depends definitively on the type of connection used
-and the home network configuration. In my case, the NAS uses a static IPv4
+and the home network setup. In my case, the NAS uses a static IPv4
 address, so it can be configured through `ifupdown`, and it is only necessary
 to correctly write the `/etc/network/interfaces` for the `enp1s0` Realtek 2.5Gb
 Ethernet interface. Not that it requires a non-free firmware blog to run.
