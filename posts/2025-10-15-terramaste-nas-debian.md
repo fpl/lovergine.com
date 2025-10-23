@@ -88,6 +88,7 @@ chroot /mnt
 apt update
 apt upgrade -y
 apt install grub-efi-amd64 linux-image-amd64 ssh \
+        firmware-misc-nonfree \
         firmware-realtek xfsprogs rsync pmount \
         gddrescue screen util-linux-extra bash-completion \
  	mdadm  parted smartmontools htop ntp unattended-upgrades sudo
