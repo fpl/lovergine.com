@@ -36,7 +36,6 @@
              (haunt builder rss)
              (haunt builder assets)
              (haunt builder flat-pages)
-             (haunt builder tag-pages) ;; New tag-pages module
              (haunt html)
              (haunt page)
              (haunt post)
@@ -45,6 +44,7 @@
              (haunt reader texinfo)
              (haunt site)
              (haunt utils)
+             (builder tag-pages)
              (commonmark)
              (syntax-highlight)
              (syntax-highlight scheme)
