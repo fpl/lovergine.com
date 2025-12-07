@@ -24,4 +24,5 @@ So, a minimal list of the tools I use to build this site is the following:
  - [Let's Encrypt Certificate Authority](https://letsencrypt.org/)
 
 The whole thing is nicely hosted on a Scaleway VPS in EU. 
-Posts are written rigorously by hand, but for AI-based grammar revisions.
+Posts are written rigorously by hand, but for AI-based grammar revisions and some images created
+with Gemini Nano Banana.

@@ -16,6 +16,8 @@ invariably pose a problem in their use for the average scientist
 (often a young/junior dedicated to a short-term project) in any
 application domain.
 
+![HPC means high-pain computing](/images/high-pain-computing.jpg)
+
 To use Fred Brooks' definition, HPC technologies have both intrinsic and
 incidental fallacies for such users category. The intrinsic one is due to the inner
 complexity of creating a parallel and distributed solution to any problem,
