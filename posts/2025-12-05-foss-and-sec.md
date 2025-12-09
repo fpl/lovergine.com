@@ -38,7 +38,8 @@ FOSS development has been mainstream for at least the last 20 years: that
 implies that the sustainability (and security) problem extends to the entire
 supply chain for both FOSS and commercial software.
 
-I already dealt with some of those topics in past posts (e.g., have a look [here](/foss-governance-and-sustainability-in-the-third-millennium.html)), not referring to
+I already dealt with some of those topics in past posts 
+(e.g., have a look [here](/foss-governance-and-sustainability-in-the-third-millennium.html), or [here](/are-distributions-still-relevant.html)), not referring to
 security, but to the sustainability of the FOSS ecosystem of
 _independent-but-interdependent_ projects. This is a matter of responsability
 for both FOSS mantainers and companies, and not something that could be avoided
@@ -53,6 +54,6 @@ sources of binaries, packages, images, and distributions is another sure quarry 
 they imply a multiplication of possible origins of issues, as well as the need of sustaining multiple teams and replicating
 efforts instead of concentrating them.
 
-_"There is great chaos under heaven; the situation is excellent!" ._
+_There is great chaos under heaven; the situation is excellent! (Mao Zedong) ._
 
 

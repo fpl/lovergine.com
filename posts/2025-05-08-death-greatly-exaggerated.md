@@ -16,6 +16,8 @@ programming languages. Of course, this post is not absolutely limited to them;
 it could be applied with little effort to libraries, tools, frameworks, content
 management systems, and many other tools of common use among developers.
 
+![The Walking Dead coders](/images/walking-dead-coding.png)
+
 Any developer who has been around enough knows that the death hoaxes about the
 end of a programming language are a common refrain that returns almost every
 year for most of them. The nude truth about programming languages is that

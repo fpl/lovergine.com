@@ -12,6 +12,8 @@ after the first edition of 1975. I did that on purpose, firstly because it is
 always a fantastic read, and secondly to understand how much of its contents is
 still valid today, exactly thirty years later since its last revision. 
 
+![The Mythical Man-Month](/images/mm-m.png)
+
 Fred missed in 2022; otherwise, it would still be interesting to know his thinking
 nowadays after the LLMs boom and the birth of the AIAD (AI Aided Development) as
 a new revolutionary (or often seen as such) tool. Hi, Fred, wherever you are.
