@@ -40,11 +40,13 @@
              (haunt page)
              (haunt post)
              (haunt reader)
-             (haunt reader commonmark)
              (haunt reader texinfo)
              (haunt site)
              (haunt utils)
+
              (builder tag-pages)
+             (reader commonmark)
+
              (commonmark)
              (syntax-highlight)
              (syntax-highlight scheme)
@@ -280,33 +282,6 @@
 
 (define (raw-snippet code)
   `(pre (code ,(if (string? code) code (read-string code)))))
-
-;; Markdown doesn't support video, so let's hack around that!  Find
-;; <img> tags with a ".webm" source and substitute a <video> tag.
-(define (media-hackery . tree)
-  (sxml-match tree
-    ((img (@ (src ,src) . ,attrs) . ,body)
-     (if (string-suffix? ".webm" src)
-         `(video (@ (src ,src) (controls "true"),@attrs) ,@body)
-         tree))))
-
-(define %commonmark-rules
-  `((code . ,highlight-code)
-    (img . ,media-hackery)
-    (*text* . ,(lambda (tag str) str))
-    (*default* . ,sxml-identity)))
-
-(define (post-process-commonmark sxml)
-  (pre-post-order sxml %commonmark-rules))
-
-(define commonmark-reader*
-  (make-reader (make-file-extension-matcher "md")
-               (lambda (file)
-                 (call-with-input-file file
-                   (lambda (port)
-                     (values (read-metadata-headers port)
-                             (post-process-commonmark
-                              (commonmark->sxml port))))))))
 
 (define (static-page title file-name body)
   (lambda (site posts)
