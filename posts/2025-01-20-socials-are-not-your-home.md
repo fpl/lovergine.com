@@ -1,5 +1,6 @@
 title: Socials, they are not your home. 
 date: 2025-01-20 17:00
+mastodon: https://floss.social/@gisgeek/113861646207995753
 tags: internet, digital rights, society
 summary: The social networks are not a nice place, time to depart from them
 ---

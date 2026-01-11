@@ -1,5 +1,6 @@
 title: FOSS toxicity, burnout and governance (again)
 date: 2025-03-23 15:40
+mastodon: https://floss.social/@gisgeek/114212348993284787
 tags: development, foss, governance
 summary: About toxicy in FOSS projects and missing rules for governance
 ---

@@ -1,5 +1,6 @@
 title: Enterprise software systems, or how diamonds never came from s*it 
 date: 2025-02-23 15:00
+mastodon: https://floss.social/@gisgeek/114053780912055518
 tags: development, burnout, enterprise, motivation
 summary: Very opinioneted post about enterprise systems and other beasts
 ---

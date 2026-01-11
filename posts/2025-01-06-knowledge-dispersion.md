@@ -1,5 +1,6 @@
 title: Knowledge dispersion, AI and fragmentation of the information sources
 date: 2025-01-06 21:00
+mastodon: https://floss.social/@gisgeek/113786722587855386
 tags: personal growth, documentation, ai, knowledge dispersion
 summary: 
 ---

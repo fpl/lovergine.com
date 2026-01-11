@@ -1,5 +1,6 @@
 title: Digital communities, toxicity and other drifts
 date: 2025-02-08 17:56
+mastodon: https://floss.social/@gisgeek/113969360820862370
 tags: internet, society
 summary: About toxicity of big-co socials and Fediverse.
 ---

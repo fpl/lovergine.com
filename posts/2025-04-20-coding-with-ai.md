@@ -1,5 +1,6 @@
 title: Coding with AI, the good and the bad
 date: 2025-04-20 17:40
+mastodon: https://floss.social/@gisgeek/114371070708240568
 tags: development, ai, aiad
 summary: About AI-aided development and my results.
 ---

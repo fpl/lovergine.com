@@ -1,5 +1,6 @@
 title: AI artifacts, copyright and electric sheep dreaming
 date: 2025-04-22 12:30
+mastodon: https://floss.social/@gisgeek/114381320503804708
 tags: development, ai, aiad, foss, copyright
 summary: About AI-aided development and licenses.
 ---
