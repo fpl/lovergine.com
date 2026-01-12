@@ -1,6 +1,6 @@
 ;;; Copyright (C) 2018 David Thompson <davet@gnu.org>
 ;;; Copyright (C) 2018-2023 Janneke Nieuwenhuizen <janneke@gnu.org>
-;;; Copyright (C) 2024-2025 Francesco Paolo Lovergine <mbox@lovergine.com>
+;;; Copyright (C) 2024-2026 Francesco Paolo Lovergine <mbox@lovergine.com>
 ;;;
 ;;; Main Guile 3.0 script for generating lovergine.com personal blog with Haunt. 
 ;;;
@@ -177,7 +177,7 @@
                    ,body
                    (footer (@ (class "text-center"))
                            (p (@ (class "copyright"))
-                              "Copyright (C) 2024-2025 Francesco P. Lovergine"
+                              "Copyright (C) 2024-2026 Francesco P. Lovergine"
                               ,%cc-by-sa-button)
                            (p "The text and images on this site are free culture works available under the " ,%cc-by-sa-link " license.")
                            (p "This website is built with "
