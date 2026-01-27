@@ -1,6 +1,6 @@
 title: A Terramaster NAS with Debian, take two.
 date: 2026-01-19 13:00
-tags: debian, configuration, personal computing, technology
+tags: debian, configurations, personal computing, technology
 summary: More settings for Terramaster with plain Debian OS.
 ---
 
