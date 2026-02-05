@@ -137,6 +137,7 @@
              (head
               (meta (@ (charset "utf-8")))
               (meta (@ (lang "en")))
+              (meta (@ (name "fediverse:creator")(content "@gisgeek@floss.social")))
               (link (@ (rel "alternate")
                    (type "application/rss+xml")
                    (title "lovergine.com")
