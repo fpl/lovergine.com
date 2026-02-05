@@ -1,7 +1,7 @@
 title: Is AI driven coding the start of the end of mainstream FOSS?
 date: 2026-02-04 20:00
 mastodon: https://floss.social/@gisgeek/116017225591034270
-tags: foss, technology, development, ai
+tags: foss, technology, development, ai, aiad
 summary: Impact of AI on FOSS development.
 ---
 
