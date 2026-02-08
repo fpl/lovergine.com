@@ -8,7 +8,7 @@ I’m not too happy with using mobile devices as a daily driver for server
 connections. When one needs to use a keyboard, in many cases the appropriate
 device is inevitably a laptop or a desktop computer. Anyway, sometimes it
 happens  that the mobile phone should be used as an SSH client for an emergency
-or to perform simple remote tasks. Possibly something that is usable, decently
+or to perform simple remote tasks. Possibly using an app that is usable, decently
 supported, and can share common configurations among multiple devices with a
 reasonable level of security.
 
@@ -29,7 +29,7 @@ Thanks gosh, *Termux* entered the room.
 For people who don't know it, it is an Android terminal that emulates a color
 xterm, but has some nice features, specifically a damn good 
 [package management tool](https://wiki.termux.com/wiki/Package_Management)
-built in. Of course, it is pure FOSS, too.
+built in. Of course, it is pure FOSS.
 ```
 pkg install openssh git vim
 ```
