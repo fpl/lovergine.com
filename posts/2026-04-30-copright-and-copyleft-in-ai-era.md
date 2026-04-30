@@ -1,10 +1,11 @@
-title: Copyright and copyleft in the AI era
+title: The Artificial Author: copyright and copyleft in the AI era
 date: 2026-04-30 11:00
 tags: ai, copyright, books, society
+mastodon: https://floss.social/@gisgeek/116492891504615977
 summary: Review of The Artificial Author, 2nd ed.
 ---
 
-I recently finished reading Simone Aliprandi’s second edition of a book I would recommend to many people interested in either authoring software and databases or making creative works. ‘The Artificial Author’, as its title suggests, deals with the role of generative AI in creative jobs seen from a legal point of view. This massive book seeks to shed light on a central yet complex issue that, in recent years, has affected many people, not only in the IT sector but also across many sectors of the creative industry.
+I recently finished reading [Simone Aliprandi](https://aliprandi.org/)’s second edition of a book I would recommend to many people interested in either authoring software and databases or making creative works. ‘The Artificial Author’, as its title suggests, deals with the role of generative AI in creative jobs seen from a legal point of view. This massive book seeks to shed light on a central yet complex issue that, in recent years, has affected many people, not only in the IT sector but also across many sectors of the creative industry.
 
 ![The Artificial Author cover](/images/the-artificial-author.jpg)
 
