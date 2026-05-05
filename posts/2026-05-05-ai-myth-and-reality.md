@@ -1,5 +1,6 @@
 title: The only good AI is a dead one: myth and reality of AI tooling for code
 date: 2026-05-05 13:00
+mastodon: https://floss.social/@gisgeek/116521632314811386
 tags: ai, society, aiad, coding, computing, development, programming, technology
 summary: A controversy about AI code quality evaluation generates some thoughts.
 ---
