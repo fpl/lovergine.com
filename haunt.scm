@@ -45,6 +45,8 @@
              (haunt utils)
 
              (builder tag-pages)
+             (builder planet)
+             (planet config)
              (reader commonmark)
 
              (commonmark)
@@ -169,7 +171,9 @@
                             (li ,(link "about" "/about.html"))
                             (li ,(link "contact" "/contact.html"))
                             (li ,(link "colophon" "/colophon.html"))
-                            (li ,(link "tags" "/tags/")) ;; Added tags link
+                            (li ,(link "tags" "/tags/"))
+                            (li ,(link "planet" "/planet/"))
+                            (li ,(link "feeds" "/planet/sources.html"))
                             (li (@ (class "fade-text")) " ")))
                    ,@(if (not (equal? title "Recent Blog Posts")) '()
                        `((div (@ (class "right-box"))
@@ -322,6 +326,10 @@
                                  #:title "All Tags")
                        (flat-pages "pages"
                                    #:template custom-flat-page-template)
+                       (planet-builder #:theme lovergine.com-theme
+                                       #:title "News from the Planet"
+                                       #:feeds planet-feeds
+                                       #:posts-per-page 25)
                        (static-directory "css")
                        (static-directory "fonts")
                        (static-directory "images")

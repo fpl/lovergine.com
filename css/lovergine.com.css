@@ -314,6 +314,7 @@ footer {
 #tags-index {
     list-style-type: none;
     padding-left: 0;
+    margin-bottom: 3rem;
 }
 
 #tags-index li {
@@ -413,4 +414,33 @@ h2.site-title {
 
 .mastodon-comments a {
     color: var(--a);
+}
+
+/* Planet pages */
+
+.planet-post {
+  margin-bottom: 3rem;
+}
+
+.planet-meta {
+  color: var(--d);
+  font-size: 0.85em;
+  margin: 0 0 0.5rem;
+}
+
+.planet-excerpt {
+  margin: 0.5rem 0;
+  font-size: 0.95em;
+}
+
+/* Planet sources page */
+
+.planet-feeds-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 3rem;
+}
+
+.planet-feeds-list li {
+  padding: 0.4rem 0;
 }
