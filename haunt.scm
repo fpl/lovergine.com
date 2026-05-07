@@ -329,7 +329,8 @@
                        (planet-builder #:theme lovergine.com-theme
                                        #:title "News from the Planet"
                                        #:feeds planet-feeds
-                                       #:posts-per-page 25)
+                                       #:posts-per-page 25
+                                       #:entries-per-feed 10)
                        (static-directory "css")
                        (static-directory "fonts")
                        (static-directory "images")
