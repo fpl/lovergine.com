@@ -50,7 +50,7 @@
      (link . "https://lwn.net/"))
 
     ((name . "OSGeo Planet")
-     (url  . "https://planet.osgeo.org/atom.xml")
+     (url  . "https://planet.osgeo.org/rss20.xml")
      (link . "https://planet.osgeo.org/"))
 
     ))
