@@ -17,6 +17,10 @@
 ;;;   (link . "https://...blog/")      ; Blog homepage URL
 (define planet-feeds
   '(
+    ((name . "Apache News")
+     (url  . "https://news.apache.org/feed")
+     (link . "https://news.apache.org/"))
+
     ((name . "Debian Planet")
      (url  . "https://planet.debian.org/atom.xml")
      (link . "https://planet.debian.org/"))
@@ -48,6 +52,10 @@
     ((name . "LWN")
      (url  . "https://lwn.net/headlines/rss")
      (link . "https://lwn.net/"))
+
+    ((name . "Mozilla Planet")
+     (url  . "https://planet.mozilla.org/rss20.xml")
+     (link . "https://planet.mozilla.org/"))
 
     ((name . "OSGeo Planet")
      (url  . "https://planet.osgeo.org/rss20.xml")
