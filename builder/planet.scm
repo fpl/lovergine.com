@@ -217,7 +217,7 @@
 (define (make-entry name blog-link title link date raw-summary)
   `((name      . ,name)
     (blog-link . ,blog-link)
-    (title     . ,title)
+    (title     . ,(decode-html-entities (or title "")))
     (link      . ,link)
     (date      . ,date)
     (summary   . ,(extract-summary raw-summary))))

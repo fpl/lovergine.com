@@ -53,4 +53,8 @@
      (url  . "https://planet.osgeo.org/rss20.xml")
      (link . "https://planet.osgeo.org/"))
 
+    ((name . "Terence Eden")
+     (url  . "https://shkspr.mobi/blog/feed/atom/")
+     (link . "https://shkspr.mobi/"))
+
     ))
