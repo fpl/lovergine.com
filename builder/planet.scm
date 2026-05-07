@@ -217,7 +217,7 @@
 (define (make-entry name blog-link title link date raw-summary)
   `((name      . ,name)
     (blog-link . ,blog-link)
-    (title     . ,title)
+    (title     . ,(decode-html-entities (or title "")))
     (link      . ,link)
     (date      . ,date)
     (summary   . ,(extract-summary raw-summary))))
@@ -303,12 +303,24 @@
                 "planet: error processing ~a: ~a~%" url key)
         '()))))
 
-(define (fetch-and-sort-feeds feeds-config)
-  "Fetch all feeds and return entries sorted newest-first."
-  (sort (apply append (map fetch-feed-entries feeds-config))
+(define (sort-by-date entries)
+  (sort entries
         (lambda (a b)
           (> (date->sort-key (assq-ref a 'date))
              (date->sort-key (assq-ref b 'date))))))
+
+(define* (fetch-and-sort-feeds feeds-config #:optional (entries-per-feed #f))
+  "Fetch all feeds and return entries sorted newest-first.
+If ENTRIES-PER-FEED is set, take at most that many recent entries per feed
+before merging, preventing any single prolific feed from dominating."
+  (sort-by-date
+    (apply append
+           (map (lambda (feed-config)
+                  (let* ((entries (sort-by-date (fetch-feed-entries feed-config)))
+                         (n       (length entries))
+                         (limit   (if entries-per-feed (min entries-per-feed n) n)))
+                    (take entries limit)))
+                feeds-config))))
 
 ;;;
 ;;; Pagination
@@ -405,14 +417,15 @@
                          (theme #f)
                          (title "Planet")
                          (feeds '())
-                         (posts-per-page 10))
+                         (posts-per-page 10)
+                         (entries-per-feed #f))
   "Return a builder that fetches FEEDS and renders paginated planet pages.
 
 Each page goes to planet/index.html (page 0) or planet/page_N.html (N≥2).
 THEME is the Haunt theme used for layout. POSTS-PER-PAGE controls how many
 entries appear per page (default 10)."
   (lambda (site haunt-posts)
-    (let* ((all-entries  (fetch-and-sort-feeds feeds))
+    (let* ((all-entries  (fetch-and-sort-feeds feeds entries-per-feed))
            (pages        (paginate all-entries posts-per-page))
            (total-pages  (length pages)))
       (cons
