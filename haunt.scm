@@ -330,7 +330,7 @@
                                        #:title "News from the Planet"
                                        #:feeds planet-feeds
                                        #:posts-per-page 25
-                                       #:entries-per-feed 10)
+                                       #:entries-per-feed 20)
                        (static-directory "css")
                        (static-directory "fonts")
                        (static-directory "images")
