@@ -65,6 +65,10 @@
      (url  . "https://gishub.org/rss.xml")
      (link . "https://gishub.org/"))
 
+    ((name . "Scheme Planet")
+     (url  . "https://planet.scheme.org/atom.xml")
+     (link . "https://planet.scheme.org/"))
+
     ((name . "Terence Eden")
      (url  . "https://shkspr.mobi/blog/feed/atom/")
      (link . "https://shkspr.mobi/"))
