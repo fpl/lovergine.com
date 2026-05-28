@@ -1,5 +1,6 @@
 title: The Web is dying, long live the World Wide Web.
 date: 2026-05-27 13:30
+mastodon: https://floss.social/@gisgeek/116646314032836279
 tags: ai, society, internet, technology
 summary: Problems of the WWW are more and more evident. This is the end?
 ---
