@@ -101,7 +101,7 @@ the daylight, looking for the true web value with mixed luck...
 A giant step backward at a time when there were manually maintained indexes of
 interesting sites organized by topics. Damn it, sounds familiar. Not so bad,
 wasn’t it? That’s the core of the Fediverse, basically: some micro-universes
-oriented to small communities of focused users, all navigating in an global ocean 
+oriented to small communities of focused users, all navigating in a global ocean 
 of mere s*t. 
 
 ## References
