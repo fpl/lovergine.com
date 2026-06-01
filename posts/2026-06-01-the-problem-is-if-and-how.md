@@ -33,7 +33,7 @@ is blindly used as a committer or to create PRs or issues.  The whole
 controversy comes into dramatic focus when the project is a prime-time one, as
 in the case of rsync.
 
-Not that rsync has been with evidence in quite low-intensity maintenance in
+Note that rsync has been with evidence in quite low-intensity maintenance in
 recent years, with several hundred issues open and almost 50 PRs proposed but
 still pending. This is quite normal for seasoned FOSS projects, like it or not,
 and specifically for low-voltage tools that have most of their life-cycle in the
