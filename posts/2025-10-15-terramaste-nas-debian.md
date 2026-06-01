@@ -39,7 +39,7 @@ requires opening the chassis for that and using a tiny stick.
 
 At power-on, the internal TOS dongle automagically boots up, so connecting an
 HDMI display and a keyboard is required to change the setup to boot the Debian
-EFI image on the stick. On F2-425, press the <F12> key to access the AMI setup
+EFI image on the stick. On F2-425, press the `<F12>` key to access the AMI setup
 and change boot priorities. There are always slight differences among AMI BIOS
 setups, so it is required to find the right key to access settings and change
 boot options.
