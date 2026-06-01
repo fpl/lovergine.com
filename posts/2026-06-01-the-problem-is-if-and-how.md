@@ -1,5 +1,6 @@
 title: The problem is not only if, but how.
 date: 2026-06-01 13:30
+mastodon: https://floss.social/@gisgeek/116675475096793216
 tags: ai, society, internet, technology
 summary: Problems with AI in FOSS is first if, then how adopting.
 ---
