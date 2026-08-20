@@ -65,10 +65,10 @@ debootstrap trixie /mnt
 mount -o bind /dev /mnt/dev
 mount -t devpts devpts /mnt/dev/pts
 mount -t proc proc /mnt/proc
-mount -t sysfs sysfs /sys /mnt/sys
+mount -t sysfs sysfs /mnt/sys
 mount -t tmpfs run /mnt/run
 
-cp /etc/apt/sources.d/debian.sources /mnt/etc/apt/sources.d/.
+cp /etc/apt/sources.list.d/debian.sources /mnt/etc/apt/sources.list.d/.
 cp /etc/resolv.conf /mnt/etc/.
 
 echo "nas" > /mnt/etc/hostname

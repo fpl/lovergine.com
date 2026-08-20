@@ -132,7 +132,7 @@ main "$@"
 To run such a script at boot, add a unit file to the systemd configuration.
 
 ```
-sudo systemctl  edit --full /etc/systemd/system/regenerate-smartd-conf.service
+sudo systemctl  edit --full --force regenerate-smartd-conf.service
 sudo systemctl enable regenerate-smartd-conf.service
 ```
 
