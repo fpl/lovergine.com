@@ -1,4 +1,4 @@
-title: Is the future federated? Or, why the hyperscaler are here to stay
+title: Is the future federated? Or, why the hyperscalers are here to stay
 date: 2026-08-07 19:00
 mastodon: https://floss.social/@gisgeek/117055364656482441
 tags: society, personal computing, technology, fediverse, internet
