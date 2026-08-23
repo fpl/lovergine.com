@@ -1,7 +1,7 @@
 title: About me
 ---
 
-## Hi.
+# Hi.
 
 I'm universally known as *Frankie*, a long-time Debian Developer and FLOSS
 activist. I found my way into the free/open-source world in the mid-90s, thanks

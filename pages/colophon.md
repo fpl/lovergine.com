@@ -1,7 +1,7 @@
 title: Colophon
 ---
 
-## How I did it
+# How I did it
 
 As explained [in my first
 post](https://lovergine.com/rebuild-process-running.html), at a certain point in
