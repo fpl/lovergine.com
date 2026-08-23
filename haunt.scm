@@ -46,6 +46,7 @@
 
              (builder tag-pages)
              (builder planet)
+             (builder sitemap)
              (planet config)
              (reader commonmark)
 
@@ -316,6 +317,7 @@
                              #:posts-per-page 10)
                        (atom-feed)
                        (rss-feed)
+                       (sitemap)
                        (atom-feeds-by-tag)
                        ;; Add tag-pages builder with no prefix (to fix the path issue)
                        (tag-pages #:theme lovergine.com-theme
