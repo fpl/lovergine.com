@@ -1,6 +1,8 @@
 title: Contact information
 ---
 
+# Contacts
+
 I receive many messages, and you usually need to convince me that you are not a
 spammer and that what you are writing requires my attention. I prefer that you
 use ordinary ticketing systems and mailing lists for projects in which I'm
