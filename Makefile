@@ -21,6 +21,8 @@ $(info CONFIG=$(CONFIG))
 
 .PHONY: all clean default haunt serve
 
+DIRS:=css fonts js images videos
+
 default: all
 
 all: haunt
@@ -28,15 +30,17 @@ all: haunt
 clean:
 	git clean -fdx
 
-haunt:
+haunt: | $(DIRS)
 	haunt build --config=$(CONFIG)
 
 site/index.html:
 	$(MAKE) haunt
 
-serve: site/index.html
+serve: site/index.html | $(DIRS)
 	haunt serve --config=$(CONFIG) --watch --port=$(PORT)
 
 publish: site/index.html
 	rsync -avczz site/ rivendell.lovergine.com:/var/www/html/.
 
+$(DIRS):
+	mkdir -p $@
