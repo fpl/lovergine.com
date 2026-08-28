@@ -4,7 +4,8 @@ tags: debian, configurations, personal computing, technology
 summary: More settings for Terramaster with plain Debian OS.
 ---
 
-After experimenting at home, the very first professional-grade NAS from
+After [experimenting at home](/installing-debian-on-a-usb-stick-for-a-terramaster-nas.html), 
+the very first professional-grade NAS from
 Terramaster arrived at work, too, with 12 HDD bays and possibly a pair of M2s.
 NVME cards. In this case, I again installed a plain Debian distribution, but HDD
 monitoring required some configuration adjustments to run `smartd` properly.

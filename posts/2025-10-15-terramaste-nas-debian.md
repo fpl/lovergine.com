@@ -127,8 +127,8 @@ In order to allow shutting down by pressing the power button, it is required to
 configure `systemd-logind` as follows.
 
 ```
-sed -i -e 's/^#HandlePowerKey=poweroff'/HandlePowerKey=poweroff/ \
-       -e 's/^#HandlePowerKeyLongPress=ignore/HandlePowerKeyLongPress=ignore/ \
+sed -i -e 's/^#HandlePowerKey=poweroff/HandlePowerKey=poweroff/' \
+       -e 's/^#HandlePowerKeyLongPress=ignore/HandlePowerKeyLongPress=ignore/' \
 	/etc/systemd/logind.conf
 
 systemctl restart systemd-logind.service
