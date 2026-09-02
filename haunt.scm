@@ -324,36 +324,64 @@
                   "Untitled")))
     ((theme-layout lovergine.com-theme) site title body)))
 
+;; HAUNT_MODE controls which builders run, so the slow planet feed
+;; fetches can be split from the fast post/page build (see Makefile
+;; targets `build`, `planet`, `full`).  Unset (or any other value)
+;; means "full": build everything, same as before this split existed.
+(define %haunt-mode
+  (let ((mode (getenv "HAUNT_MODE")))
+    (and mode (string->symbol mode))))
+
+(define %build-posts? (memq %haunt-mode '(#f full build)))
+(define %build-planet? (memq %haunt-mode '(#f full planet)))
+
+;; `build` and `planet` each do a clean build (haunt wipes the build
+;; directory on every run), so they target their own scratch
+;; directories; the Makefile merges those into site/ afterwards
+;; without disturbing what the other phase produced.  `full` targets
+;; site/ directly, same as before this split existed.
+(define %build-directory
+  (case %haunt-mode
+    ((build) "_site-build")
+    ((planet) "_site-planet")
+    (else "site")))
+
 (site #:title "frankie-tales"
       #:domain "lovergine.com"
+      #:build-directory %build-directory
       #:default-metadata
       '((author . "Francesco P. Lovergine")
         (email  . "mbox@lovergine.com"))
       #:readers (list commonmark-reader* texinfo-reader)
-      #:builders (list (blog #:theme lovergine.com-theme 
-                             #:collections (collections)
-                             #:posts-per-page 10)
-                       (atom-feed)
-                       (rss-feed)
-                       (sitemap)
-                       (atom-feeds-by-tag)
-                       ;; Add tag-pages builder with no prefix (to fix the path issue)
-                       (tag-pages #:theme lovergine.com-theme
-                                 #:prefix #f
-                                 #:title "Posts Tagged")
-                       (tag-index #:theme lovergine.com-theme
-                                 #:prefix #f
-                                 #:title "All Tags")
-                       (flat-pages "pages"
-                                   #:template custom-flat-page-template)
-                       (planet-builder #:theme lovergine.com-theme
-                                       #:title "News from the Planet"
-                                       #:feeds planet-feeds
-                                       #:posts-per-page 25
-                                       #:entries-per-feed 20)
-                       (static-directory "css")
-                       (static-directory "fonts")
-                       (static-directory "images")
-                       (static-directory "js")
-                       (static-directory "videos")))
+      #:builders (append
+                  (if %build-posts?
+                      (list (blog #:theme lovergine.com-theme
+                                  #:collections (collections)
+                                  #:posts-per-page 10)
+                            (atom-feed)
+                            (rss-feed)
+                            (sitemap)
+                            (atom-feeds-by-tag)
+                            ;; Add tag-pages builder with no prefix (to fix the path issue)
+                            (tag-pages #:theme lovergine.com-theme
+                                       #:prefix #f
+                                       #:title "Posts Tagged")
+                            (tag-index #:theme lovergine.com-theme
+                                       #:prefix #f
+                                       #:title "All Tags")
+                            (flat-pages "pages"
+                                        #:template custom-flat-page-template)
+                            (static-directory "css")
+                            (static-directory "fonts")
+                            (static-directory "images")
+                            (static-directory "js")
+                            (static-directory "videos"))
+                      '())
+                  (if %build-planet?
+                      (list (planet-builder #:theme lovergine.com-theme
+                                             #:title "News from the Planet"
+                                             #:feeds planet-feeds
+                                             #:posts-per-page 25
+                                             #:entries-per-feed 20))
+                      '())))
 
