@@ -2,7 +2,7 @@
 ;;; Copyright (C) 2018-2023 Janneke Nieuwenhuizen <janneke@gnu.org>
 ;;; Copyright (C) 2024-2026 Francesco Paolo Lovergine <mbox@lovergine.com>
 ;;;
-;;; Main Guile 3.0 script for generating lovergine.com personal blog with Haunt. 
+;;; Main Guile 3.0+ script for generating lovergine.com personal blog with Haunt. 
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 ;;;     - guile-reader
 ;;;     - guile-commonmark
 ;;;     - guile-syntax-highlight
+;;;     - guile-lib
 ;;; that need to be installed before haunt.
 ;;;
 
@@ -49,6 +50,7 @@
              (builder sitemap)
              (planet config)
              (reader commonmark)
+             (lovergine open-graph)
 
              (commonmark)
              (syntax-highlight)
@@ -65,6 +67,13 @@
              (ice-9 regex)
              (ice-9 match)
              (web uri))
+
+;; Single source of truth for the values passed to (site #:title ...
+;; #:domain ...) at the bottom of this file.  #:post-template only
+;; receives POST (no <site>), so open-graph-meta-tags needs these as
+;; plain strings rather than site-title/site-domain accessors.
+(define %site-title "frankie-tales")
+(define %site-domain "lovergine.com")
 
 (define (date year month day)
   "Create a SRFI-19 date for the given YEAR, MONTH, DAY"
@@ -151,7 +160,11 @@
                    (href "/feed.xml")))
               (link (@(rel "icon")
                     (href "/images/favicon.png")))
-
+              ,@(let ((tags (current-post-og-tags)))
+                  (if (null? tags)
+                      (open-graph-meta-tags %site-title %site-domain title)
+                      (begin (current-post-og-tags '())
+                             tags)))
               (title ,(string-append title " — " (site-title site)))
               ,(stylesheet "reset")
               ,(stylesheet "fonts")
@@ -213,6 +226,14 @@
                               "."))))))
          #:post-template
          (lambda (post)
+           (current-post-og-tags
+             (open-graph-meta-tags %site-title %site-domain (post-ref post 'title)
+               #:path        (string-append "/" (post-slug post) ".html")
+               #:type        "article"
+               #:description (post-ref post 'description)
+               #:image       (post-ref post 'image)
+               #:published-time (date->string (post-date post) "~Y-~m-~dT~H:~M:~SZ")
+               #:author      (post-ref post 'author)))
            `((h1 (@ (class "title")),(post-ref post 'title))
              (div (@ (class "date"))
                   ,(date->string (post-date post)
@@ -346,8 +367,8 @@
     ((planet) "_site-planet")
     (else "site")))
 
-(site #:title "frankie-tales"
-      #:domain "lovergine.com"
+(site #:title %site-title
+      #:domain %site-domain
       #:build-directory %build-directory
       #:default-metadata
       '((author . "Francesco P. Lovergine")
@@ -384,4 +405,3 @@
                                              #:posts-per-page 25
                                              #:entries-per-feed 20))
                       '())))
-
