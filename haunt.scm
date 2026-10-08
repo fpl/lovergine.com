@@ -28,7 +28,7 @@
 ;;; that need to be installed before haunt.
 ;;;
 
-(setlocale LC_ALL "C")
+(setlocale LC_ALL "C.UTF-8")
 (fluid-set! %default-port-encoding "UTF-8")
 
 (use-modules (haunt asset)
