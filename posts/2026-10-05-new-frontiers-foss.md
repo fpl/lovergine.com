@@ -24,7 +24,7 @@ regardless of the project's AI policy.
 
 My thesis is that, in any case, PRs and issues with patch submissions should be
 deeply reconsidered over the average project lifetime, on both sides of the
-process -- i.e., the maintainer(s) and the contributor(s).
+process — i.e., the maintainer(s) and the contributor(s).
 
 Firstly, if the project does not have an explicit AI policy, the maintainer(s)
 should reconsider it: this is not the case for Christian’s project, which
@@ -82,8 +82,8 @@ tools through fast change-and-review cycles. This is true in my case, but I
 expect it to be true for many developers in multiple fields, and it will impact
 many projects in the immediate future, resulting in fewer developers, fewer
 users, and smaller communities per project. I expect many once-first-class
-projects -- created to provide higher levels of abstraction to simplify
-development -- to become legacy software sooner or later, with limited
+projects  — created to provide higher levels of abstraction to simplify
+development  — to become legacy software sooner or later, with limited
 maintenance. Who needs simplified layers of abstraction when AI can reduce
 complexity on purpose?
 
