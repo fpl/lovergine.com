@@ -353,6 +353,29 @@
   (let ((mode (getenv "HAUNT_MODE")))
     (and mode (string->symbol mode))))
 
+;; Posts whose header has `draft: true' (or yes/1) are held back from
+;; every post-based builder -- index, post pages, feeds, sitemap, tags --
+;; unless HAUNT_DRAFTS is set to something other than "" or "0" (see the
+;; Makefile `draft' target).  Haunt has no draft concept of its own, so
+;; the filtering is done by wrapping the builders.
+(define %include-drafts?
+  (let ((v (getenv "HAUNT_DRAFTS")))
+    (and v (not (member v '("" "0"))) #t)))
+
+(define (draft-post? post)
+  (let ((v (post-ref post 'draft)))
+    (and (string? v)
+         (member (string-downcase (string-trim-both v))
+                 '("true" "yes" "1"))
+         #t)))
+
+(define (without-drafts builder)
+  "Wrap BUILDER so that it never sees draft posts, unless drafts are enabled."
+  (if %include-drafts?
+      builder
+      (lambda (site posts)
+        (builder site (remove draft-post? posts)))))
+
 (define %build-posts? (memq %haunt-mode '(#f full build)))
 (define %build-planet? (memq %haunt-mode '(#f full planet)))
 
@@ -376,27 +399,29 @@
       #:readers (list commonmark-reader* texinfo-reader)
       #:builders (append
                   (if %build-posts?
-                      (list (blog #:theme lovergine.com-theme
-                                  #:collections (collections)
-                                  #:posts-per-page 10)
-                            (atom-feed)
-                            (rss-feed)
-                            (sitemap)
-                            (atom-feeds-by-tag)
-                            ;; Add tag-pages builder with no prefix (to fix the path issue)
-                            (tag-pages #:theme lovergine.com-theme
-                                       #:prefix #f
-                                       #:title "Posts Tagged")
-                            (tag-index #:theme lovergine.com-theme
-                                       #:prefix #f
-                                       #:title "All Tags")
-                            (flat-pages "pages"
-                                        #:template custom-flat-page-template)
-                            (static-directory "css")
-                            (static-directory "fonts")
-                            (static-directory "images")
-                            (static-directory "js")
-                            (static-directory "videos"))
+                      (append
+                       (map without-drafts
+                            (list (blog #:theme lovergine.com-theme
+                                        #:collections (collections)
+                                        #:posts-per-page 10)
+                                  (atom-feed)
+                                  (rss-feed)
+                                  (sitemap)
+                                  (atom-feeds-by-tag)
+                                  ;; Add tag-pages builder with no prefix (to fix the path issue)
+                                  (tag-pages #:theme lovergine.com-theme
+                                             #:prefix #f
+                                             #:title "Posts Tagged")
+                                  (tag-index #:theme lovergine.com-theme
+                                             #:prefix #f
+                                             #:title "All Tags")))
+                       (list (flat-pages "pages"
+                                         #:template custom-flat-page-template)
+                             (static-directory "css")
+                             (static-directory "fonts")
+                             (static-directory "images")
+                             (static-directory "js")
+                             (static-directory "videos")))
                       '())
                   (if %build-planet?
                       (list (planet-builder #:theme lovergine.com-theme

@@ -19,13 +19,16 @@ CONFIG:=$(SITE).scm
 PORT=8889
 $(info CONFIG=$(CONFIG))
 
-.PHONY: all build planet full clean default serve preview
+.PHONY: all build planet full clean default serve preview draft
 
 DIRS:=css fonts js images videos
 
 # Never let a HAUNT_MODE inherited from the environment leak into
 # serve/publish -- it would point them at a scratch build directory.
 unexport HAUNT_MODE
+# Same for HAUNT_DRAFTS: only the `draft' target may include drafts, so
+# a stray setting can never get them into `full'/`publish'.
+unexport HAUNT_DRAFTS
 
 default: all
 
@@ -70,6 +73,13 @@ serve: site/index.html | $(DIRS)
 preview: | $(DIRS)
 	HAUNT_MODE=build haunt build --config=$(CONFIG)
 	HAUNT_MODE=build haunt serve --config=$(CONFIG) --watch --port=$(PORT)
+
+# Like `preview', but also renders posts marked `draft: true' in their
+# header (cf. `hugo server -D').  Never touches site/, so drafts cannot
+# leak into `publish'.
+draft: | $(DIRS)
+	HAUNT_MODE=build HAUNT_DRAFTS=1 haunt build --config=$(CONFIG)
+	HAUNT_MODE=build HAUNT_DRAFTS=1 haunt serve --config=$(CONFIG) --watch --port=$(PORT)
 
 publish: full
 	rsync -avczz site/ rivendell.lovergine.com:/var/www/html/.
