@@ -255,8 +255,13 @@ footer {
     color: #e5786d;
 }
 
-.syntax-comment {
+.syntax-comment, .syntax-multi-line-comment {
     color: #999;
+    font-style: italic;
+}
+
+.syntax-variable, .syntax-entity {
+    color: #e6c27a;
 }
 
 .syntax-open, .syntax-close {

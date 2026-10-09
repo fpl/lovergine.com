@@ -43,7 +43,7 @@ caution.
 
 For instance, to install the current Guix version, it is possible to run:
 
-```
+```bash
 $ wget -O /tmp/guix-binary.tar.xz \
     https://ci.guix.gnu.org/search/latest/archive?query=spec:tarball+status:success+system:x86_64-linux+guix-binary.tar.xz
 $ wget -O /tmp/guix-install.sh https://guix.gnu.org/install.sh
@@ -76,7 +76,7 @@ Once the `guix-daemon` service
 is stopped, the `gnu-store.mount` can be disabled by ensuring the `/gnu/store`
 directory is correctly assigned to the `guix-daemon` user:
 
-```
+```bash
 $ ls -ld /gnu/store/
 drwxrwxr-t 584 guix-daemon guix-daemon 12M 18 dic 07.31 /gnu/store/
 
@@ -125,7 +125,7 @@ To set up the substitute server, a `guix publish` process must be started via
 systemd. First, create a publishing asymmetric key pair and a destination for
 the cache directory:
 
-```
+```bash
 $ sudo -i guix archive --generate-key
 $ sudo mkdir -p /var/cache/guix/publish
 $ sudo chown guix-daemon:guix-daemon /var/cache/guix/publish
@@ -171,7 +171,7 @@ manifest file with common packages or the multiple configurations used by
 personal boxes.  Here is a series of alternatives to build a handful of
 packages.
 
-```
+```bash
 guix build gcc
 guix system build my-laptop-config.scm
 guix build -m manifest.scm
@@ -181,7 +181,7 @@ guix build make cmake vim emacs perl
 
 A simple manifest example:
 
-```
+```scheme
 (specifications->manifest
  '("gcc-toolchain"
    "python"

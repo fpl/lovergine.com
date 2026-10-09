@@ -27,6 +27,7 @@
   #:use-module (haunt reader)
   #:use-module (ice-9 match)
   #:use-module (ice-9 regex)
+  #:use-module (reader highlight)
   #:use-module (srfi srfi-1)
   #:export (commonmark-reader*))
 
@@ -90,7 +91,8 @@ and removes consecutive hyphens."
 (define (transform-sxml sxml)
   "Transform SXML tree, applying various enhancements:
 - Add target=\"_blank\" and rel attributes to external links
-- Add id attributes to heading elements for anchor linking."
+- Add id attributes to heading elements for anchor linking
+- Syntax-highlight fenced code blocks with a known language."
   (match sxml
     ;; Anchor tag with attributes
     (('a ('@ . attrs) . body)
@@ -115,6 +117,16 @@ and removes consecutive hyphens."
      `(,tag (@ ,@(add-heading-id '() body))
             ,@(map transform-sxml body)))
     
+    ;; Fenced code block with a language, e.g. ```bash: highlight it when
+    ;; a lexer is known, else leave it as is.
+    (('code ('@ . attrs) (? string? source))
+     (let* ((class (and=> (assq 'class attrs) cadr))
+            (lang (and class
+                       (string-prefix? "language-" class)
+                       (string-drop class (string-length "language-"))))
+            (spans (and lang (highlight-source lang source))))
+       `(code (@ ,@attrs) ,@(or spans (list source)))))
+
     ;; Any other element with attributes
     (((? symbol? tag) ('@ . attrs) . body)
      `(,tag (@ ,@attrs) ,@(map transform-sxml body)))
