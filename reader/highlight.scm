@@ -30,6 +30,7 @@
   #:use-module (syntax-highlight c)
   #:use-module (srfi srfi-1)
   #:export (lex-shell
+            lex-ini
             language->lexer
             highlight-source))
 
@@ -84,6 +85,28 @@
             ;; lex-char-set #:max 1, which returns the rest of the input.)
             (lex-char char-set:full))))
 
+;;; INI lexer (also good for systemd units).  Everything is consumed a
+;;; whole line at a time, so each token below starts at the beginning of a
+;;; line: that is what makes `#' and `;' comments only when they lead a line
+;;; and lets values contain them.
+
+(define lex-ini-assignment
+  (lex-all
+   (lex-tag 'attribute (lex-regexp "[^=\n[;# \t][^=\n]*"))
+   (lex-tag 'special (lex-string "="))
+   ;; The value runs to the end of line, including backslash continuations.
+   (lex-regexp "([^\n\\\\]|\\\\.)*")))
+
+(define lex-ini
+  (lex-consume
+   (lex-any (lex-char-set char-set:whitespace)
+            (lex-tag 'comment (lex-any (lex-delimited ";" #:until "\n")
+                                       (lex-delimited "#" #:until "\n")))
+            (lex-tag 'element (lex-regexp "\\[[^]\n]*\\]"))
+            lex-ini-assignment
+            (lex-regexp "[^\n]+")
+            (lex-char char-set:full))))
+
 ;;; Language dispatch.
 
 (define %lexers
@@ -98,7 +121,9 @@
     ("lisp"   . ,lex-scheme)
     ("xml"    . ,lex-xml)
     ("html"   . ,lex-xml)
-    ("c"      . ,lex-c)))
+    ("c"      . ,lex-c)
+    ("ini"    . ,lex-ini)
+    ("systemd" . ,lex-ini)))
 
 (define (language->lexer lang)
   "Return the lexer for the language name LANG, or #f if unsupported."
