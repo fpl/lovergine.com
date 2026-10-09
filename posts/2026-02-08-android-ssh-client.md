@@ -30,11 +30,11 @@ For people who don't know it, it is an Android terminal that emulates a color
 xterm, but has some nice features, specifically a damn good 
 [package management tool](https://wiki.termux.com/wiki/Package_Management)
 built in. Of course, it is pure FOSS.
-```
+```bash
 pkg install openssh git vim
 ```
 Now it could be nice to access the common storage area by enabling it with
-```
+```bash
 termux-setup-storage
 ```
 This could be useful for exchanging files with remote hosts and keeping them

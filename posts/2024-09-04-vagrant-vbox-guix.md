@@ -38,7 +38,7 @@ In this case, we will not need to use [Packer](https://www.packer.io/) to prepar
 
 This is the straightforward part. Here, I'm using the `vdi` format, the native Virtualbox one, but the VMware `vmdk` format can be used instead.
 
-```
+```bash
  # load the Network Block Device module
  sudo modprobe nbd
  # create a thin device
@@ -75,7 +75,7 @@ network, because the default private and public keys of Vagrant are publicly dis
 That is usually and automagically done by `vagrant` at first boot, but Guix is a read-only system
 and - as we will see - the Guix system is still not completely supported by Vagrant.
 
-```
+```bash
 ROOTFS_UUID=$(sudo blkid -o value /dev/nbd0p1|head -1)
 SWAP_UUID=$(sudo blkid -o value /dev/nbd0p2|head -1)
 DEVICE=/dev/nbd0
@@ -163,7 +163,7 @@ EOF
 
 The `system init` can be run more than once, if required.
 
-```
+```bash
 sudo guix pull # only if needed to update packages...
 sudo guix system init guix-config.scm /mnt
 sudo umount /mnt
@@ -172,20 +172,20 @@ sudo qemu-nbd --disconnect /dev/nbd0
 ## Create a basic Virtualbox machine and attach the virtual disk to it
 
 Now, the virtual disk should already be registered and visibile under your Virtualbox configuration.
-```
+```bash
 VDI_UUID=`vboxmanage showhdinfo guix-hd.vdi|grep ^UUID|awk '{print $2}'` && echo $VDI_UUID
 ```
 should show the hexadecimal code associated to the now populated disk. It is now possible to create
 a simple virtual machine, for instance:
 
-```
+```bash
 vboxmanage createvm --name=Guix --default --ostype=Linux_64 --register
 vboxmanage modifyvm Guix --memory=4096 --cpus=2 --ioapic=on --vram=256 --cpu-profile=host \
                 --audio-enabled=off --usb-xhci=off --usb-ehci=off --usb-ohci=off --mouse=ps2
 
 ```
 and attach the virtual disk to it, as follows:
-```
+```bash
 vboxmanage storageattach Guix --storagectl=SATA --type=hdd --port=0 --device=0 --medium=$VDI_UUID
 vboxmanage showvminfo Guix
 ```
@@ -193,7 +193,7 @@ vboxmanage showvminfo Guix
 ## Convert the machine into a Vagrant box and register it
 
 The resulting vm can be directly used under Virtualbox, but the final touch is creating a proper Vagrant box to recycle and possibly publish on the cloud.
-```
+```bash
 vagrant package --base Guix --output guix-small.box
 vagrant box add guix-small.box --name=guix-small
 vagrant box list
@@ -223,7 +223,7 @@ end
 ```
 A new machine can be created, started up and connected easily, with also an initial provisioning, by issuing:
 
-```
+```bash
 vagant up guix1
 vagrant ssh guix1
 ```

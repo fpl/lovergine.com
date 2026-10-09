@@ -46,7 +46,7 @@ boot options.
 
 Let's consider /dev/sde as the name of the USB stick device on the host where
 it will be prepared. A GPT partition can be created via GNU parted, as follows:
-```
+```bash
 parted /dev/sde 	# to create EFI and root primary partition
 partprobe --summary /dev/sde
 sfdisk -l /dev/sde
@@ -57,7 +57,7 @@ mkfs.ext4 /dev/sde3
 
 Once done, installing the base system is immediate.
 
-```
+```bash
 mount /dev/sde3 /mnt
 mount /dev/sde1 /mnt/boot/efi
 debootstrap trixie /mnt
@@ -115,7 +115,7 @@ the two disks with GNU parted for a GPT Linux RAID partition.  After booting
 with the stick, a simple install of the md array support suffices.  Typically,
 the USB stick runs as `/dev/sdd` 
 
-```
+```bash
 sudo mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/sda1 /dev/sdb1
 mkfs.xfs /dev/md0
 mkdir /data
@@ -126,7 +126,7 @@ echo "UUID=$data /data xfs defaults 1 1" >>/etc/fstab
 In order to allow shutting down by pressing the power button, it is required to
 configure `systemd-logind` as follows.
 
-```
+```bash
 sed -i -e 's/^#HandlePowerKey=poweroff/HandlePowerKey=poweroff/' \
        -e 's/^#HandlePowerKeyLongPress=ignore/HandlePowerKeyLongPress=ignore/' \
 	/etc/systemd/logind.conf
@@ -137,7 +137,7 @@ systemctl restart systemd-logind.service
 It could also be a good idea to stop the periodic auto-scan on the RAID volume
 for big disks, which can take ages to run.
 
-```
+```bash
 sed -i -e 's/^AUTOCHECK=true/AUTOCHECK=false/' /etc/default/mdadm
 systemctl restart mdmonitor.service
 ```

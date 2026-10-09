@@ -24,7 +24,7 @@ NAS with a pair of RAID1 devices.
 What follows is a simple script to create a staggered `smartd.conf` at boot
 time:
 
-```
+```bash
 #!/bin/bash
 #
 # Save this as /usr/local/bin/create-smartd-conf.sh
@@ -132,14 +132,14 @@ main "$@"
 
 To run such a script at boot, add a unit file to the systemd configuration.
 
-```
+```bash
 sudo systemctl  edit --full --force regenerate-smartd-conf.service
 sudo systemctl enable regenerate-smartd-conf.service
 ```
 
 Where the unit service is the following:
 
-```
+```ini
 [Unit]
 Description=Generate smartd.conf with staggered SMART test scheduling
 # Wait for all local filesystems and udev device detection
