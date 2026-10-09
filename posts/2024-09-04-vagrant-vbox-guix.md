@@ -75,7 +75,7 @@ network, because the default private and public keys of Vagrant are publicly dis
 That is usually and automagically done by `vagrant` at first boot, but Guix is a read-only system
 and - as we will see - the Guix system is still not completely supported by Vagrant.
 
-```
+```bash
 ROOTFS_UUID=$(sudo blkid -o value /dev/nbd0p1|head -1)
 SWAP_UUID=$(sudo blkid -o value /dev/nbd0p2|head -1)
 DEVICE=/dev/nbd0

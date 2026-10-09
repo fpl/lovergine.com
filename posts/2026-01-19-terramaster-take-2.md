@@ -139,7 +139,7 @@ sudo systemctl enable regenerate-smartd-conf.service
 
 Where the unit service is the following:
 
-```
+```ini
 [Unit]
 Description=Generate smartd.conf with staggered SMART test scheduling
 # Wait for all local filesystems and udev device detection
