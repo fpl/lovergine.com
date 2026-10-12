@@ -18,7 +18,6 @@ addresses, communicating both in english or italian:
  * `frankie @ debian.org`
  * `frankie @ fsfe.org`
  * `frankie @ linux.com`
- * `fpl @ cpan.org`
 
 and eventually pass multiple spam filters.
 
