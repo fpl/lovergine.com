@@ -40,7 +40,7 @@ A DE has the indisputable advantage of including all batteries for widgets and
 customization tools, whereas most (all) WMs require third-party tooling to
 manage many disparate configuration snippets, such as Bluetooth, Wi-Fi, hot-plug devices,
 auto-sensing of beamers, dynamic multi-display, fast binding of container apps, 
-accessibility featues, and many others. Too often, also, such WMs require using a 
+accessibility features, and many others. Too often, also, such WMs require using a 
 command-line tool or a workaround to perform tasks that are simply part of the common DE experience.
 
 I also remember the pain of using the multiwindow GUI of GrassGis under Awesome,
