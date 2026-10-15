@@ -1,0 +1,196 @@
+[[!meta title="GDAL/OGR: vector operations"]]
+[[!tag gis gdal]]
+
+Part of the [[GDAL/OGR cheat sheet|gdal]].
+
+[[!toc levels=2]]
+
+## Get vector information
+
+```bash
+ogrinfo -so input.shp layer-name
+```
+
+Or, for all layers:
+
+```bash
+ogrinfo -al -so input.shp
+```
+
+## Print vector extent
+
+```bash
+ogrinfo input.shp layer-name | grep Extent
+```
+
+## List vector drivers
+
+```bash
+ogr2ogr --formats
+```
+
+## Convert between vector formats
+
+```bash
+ogr2ogr -f "GeoJSON" output.json input.shp
+```
+
+## Print count of features with attributes matching a given pattern
+
+```bash
+ogrinfo input.shp layer-name | grep "Search Pattern" | sort | uniq -c
+```
+
+## Read from a zip file
+
+This assumes that `archive.zip` is in the current directory.  This example
+just extracts the file, but any `ogr2ogr` operation should work.  It's also
+possible to write to existing zip files.
+
+```bash
+ogr2ogr -f 'GeoJSON' dest.geojson /vsizip/archive.zip/zipped_dir/in.geojson
+```
+
+## Clip vectors by bounding box
+
+```bash
+ogr2ogr -f "ESRI Shapefile" output.shp input.shp -clipsrc <x_min> <y_min> <x_max> <y_max>
+```
+
+## Clip one vector by another
+
+```bash
+ogr2ogr -clipsrc clipping_polygon.shp output.shp input.shp
+```
+
+## Reproject vector
+
+```bash
+ogr2ogr output.shp -t_srs "EPSG:4326" input.shp
+```
+
+## Convert MULTIPOLYGON to POLYGON
+
+This assumes that `input.shp` has the largest part as the first geometry for
+every multipolygon.  If not, parts need to be removed.
+
+```bash
+ogrinfo -dialect SQLite -sql "UPDATE input SET geometry = ST_GeometryN(geometry,1)" input.shp
+```
+
+## Add an index to a shapefile
+
+Add an index on an attribute:
+
+```bash
+ogrinfo example.shp -sql "CREATE INDEX ON example USING fieldname"
+```
+
+Add a spatial index:
+
+```bash
+ogrinfo example.shp -sql "CREATE SPATIAL INDEX ON example"
+```
+
+## Merge features in a vector file by attribute ("dissolve")
+
+```bash
+ogr2ogr -f "ESRI Shapefile" dissolved.shp input.shp -dialect sqlite -sql "select ST_union(Geometry),common_attribute from input GROUP BY common_attribute"
+```
+
+## Merge features ("dissolve") using a buffer to avoid slivers
+
+```bash
+ogr2ogr -f "ESRI Shapefile" dissolved.shp input.shp -dialect sqlite \
+-sql "select ST_union(ST_buffer(Geometry,0.001)),common_attribute from input GROUP BY common_attribute"
+```
+
+## Merge vector files
+
+```bash
+ogr2ogr merged.shp input1.shp
+ogr2ogr -update -append merged.shp input2.shp -nln merged
+```
+
+## Extract from a vector file based on query
+
+To extract features with `STATENAME` 'New York', 'New Hampshire', etc. from
+`states.shp`:
+
+```bash
+ogr2ogr -where 'STATENAME like "New%"' states_subset.shp states.shp
+```
+
+To extract type 'pond' from `water.shp`:
+
+```bash
+ogr2ogr -where "type = pond" ponds.shp water.shp
+```
+
+## Subset and filter all shapefiles in a directory
+
+Assumes that the filename and the name of the layer of interest are the
+same:
+
+```bash
+basename -s.shp *.shp | xargs -n1 -I % ogr2ogr %-subset.shp %.shp -sql "SELECT field-one, field-two FROM '%' WHERE field-one='value-of-interest'"
+```
+
+## Extract data from a PostGIS database to a GeoJSON file
+
+```bash
+ogr2ogr -f "GeoJSON" file.geojson PG:"host=localhost dbname=database user=user password=password" \
+-sql "SELECT * from table_name"
+```
+
+## Extract data from an ESRI REST API
+
+Services that use ESRI maps are sometimes powered by a REST server that can
+provide data in a form OGR can consume.  Finding the correct end point can
+be tricky and may take some false starts.
+
+```bash
+ogr2ogr -f GeoJSON output.geojson "http://example.com/arcgis/rest/services/SERVICE/LAYER/MapServer/0/query?f=json&returnGeometry=true&etc=..." OGRGeoJSON
+```
+
+## Get the difference between two vector files
+
+Given two files that both have an `id` field, this will produce a vector
+file with the part of `file1.shp` that doesn't intersect with `file2.shp`:
+
+```bash
+ogr2ogr diff.shp file1.shp -dialect sqlite \
+-sql "SELECT ST_Difference(a.Geometry, b.Geometry) AS Geometry, a.id \
+FROM file1 a LEFT JOIN 'file2.shp'.file2 b USING (id) WHERE a.Geometry != b.Geometry"
+```
+
+This assumes that `file1.shp` and `file2.shp` are both in the current
+directory.
+
+## Spatial join
+
+A spatial join transfers properties from one vector layer to another based
+on a [spatial
+relationship](http://postgis.net/docs/manual-2.0/reference.html#Spatial_Relationships_Measurements)
+between the features.  Fields from the join layer can be
+[aggregated](https://www.sqlite.org/lang_aggfunc.html) in the output.
+
+Given a set of points (`trees.shp`) and a set of polygons (`parks.shp`) in
+the same directory, create a polygon layer with the geometries from
+`parks.shp` and summaries of some columns in `trees.shp`:
+
+```bash
+ogr2ogr -f 'ESRI Shapefile' output.shp parks.shp -dialect sqlite \
+-sql "SELECT p.Geometry, p.id id, SUM(t.field1) field1_sum, AVG(t.field2) field2_avg
+FROM parks p, 'trees.shp'.trees t WHERE ST_Contains(p.Geometry, t.Geometry) GROUP BY p.id"
+```
+
+Note that features from `parks.shp` that don't overlap with `trees.shp`
+won't be in the new file.
+
+## Upload a GeoPackage table to a PostGIS database
+
+```bash
+ogr2ogr -progress -f Postgresql pg:"dbname=database user=user password=password port=port" \
+-nln new_table_name  geopackage.gpkg -sql "select * from table_in_geopackage"
+```

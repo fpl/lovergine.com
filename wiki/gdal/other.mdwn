@@ -1,0 +1,216 @@
+[[!meta title="GDAL/OGR: other recipes"]]
+[[!tag gis gdal]]
+
+Part of the [[GDAL/OGR cheat sheet|gdal]].
+
+[[!toc levels=2]]
+
+## Convert KML points to CSV (simple)
+
+```bash
+ogr2ogr -f CSV output.csv input.kmz -lco GEOMETRY=AS_XY
+```
+
+## Convert KML to CSV (WKT)
+
+First list the layers in the KML file:
+
+```bash
+ogrinfo -so input.kml
+```
+
+Convert the desired KML layer to CSV:
+
+```bash
+ogr2ogr -f CSV output.csv input.kml -sql "select *,OGR_GEOM_WKT from some_kml_layer"
+```
+
+## CSV points to SHP
+
+Given `input.csv`:
+
+```
+lon,lat,value
+-81,31,13
+-80,32,14
+-81,33,15
+```
+
+Create a shapefile, using Spatialite functions to generate the point:
+
+```bash
+ogr2ogr output.shp input.csv -dialect sqlite \
+-sql "SELECT MakePoint(CAST(lon as REAL), CAST(lat as REAL), 4326) Geometry, * FROM input"
+```
+
+Note the 4326, which refers to a spatial reference (in this case
+[`EPSG:4326`](http://epsg.io/4326)).  Use the correct code for your data.
+
+## MODIS operations
+
+First, download the relevant `.hdf` tiles from the MODIS FTP site,
+<ftp://ladsftp.nascom.nasa.gov/>; use the [MODIS sinusoidal
+grid](http://www.geohealth.ou.edu/modis_v5/modis.shtml) for reference.
+
+List the MODIS subdatasets in a given HDF (cf. the [MODIS products
+table](https://lpdaac.usgs.gov/products/modis_products_table/)):
+
+```bash
+gdalinfo longFileName.hdf | grep SUBDATASET
+```
+
+Make TIFs from each file in the list; replace `MOD12Q1:Land_Cover_Type_1`
+with the desired subdataset name:
+
+```bash
+mkdir output
+find . -name '*.hdf' -exec gdalwarp -of GTiff 'HDF4_EOS:EOS_GRID:"{}":MOD12Q1:Land_Cover_Type_1' output/{}.tif \;
+```
+
+Merge all `.tif` files in the output directory into a single file:
+
+```bash
+gdal_merge.py -o output/Merged_Landcover.tif output/*.tif
+```
+
+## Bash functions
+
+### Size function
+
+This size function echoes the pixel dimensions of a given file in the format
+expected by `gdalwarp`.
+
+```bash
+function gdal_size() {
+    SIZE=$(gdalinfo $1 |\
+        grep 'Size is ' |\
+        cut -d\   -f3-4 |\
+        sed 's/,//g')
+    echo -n "$SIZE"
+}
+```
+
+This can be used to easily resample one raster to the dimensions of another:
+
+```bash
+gdalwarp -ts $(gdal_size bigraster.tif) -r cubicspline smallraster.tif resampled_smallraster.tif
+```
+
+### Extent functions
+
+These extent functions echo the extent of the given file in the order and
+format expected by `gdal_translate -projwin`.  (Originally from
+[Linfiniti](http://linfiniti.com/2009/09/clipping-rasters-with-gdal-using-polygons/).)
+
+```bash
+function gdal_extent() {
+    if [ -z "$1" ]; then
+        echo "Missing arguments. Syntax:"
+        echo "  gdal_extent <input_raster>"
+        return
+    fi
+    EXTENT=$(gdalinfo $1 |\
+        grep "Upper Left\|Lower Right" |\
+        sed "s/Upper Left  //g;s/Lower Right //g;s/).*//g" |\
+        tr "\n" " " |\
+        sed 's/ *$//g' |\
+        tr -d "[(,]")
+    echo -n "$EXTENT"
+}
+
+function ogr_extent() {
+    if [ -z "$1" ]; then
+        echo "Missing arguments. Syntax:"
+        echo "  ogr_extent <input_vector>"
+        return
+    fi
+    EXTENT=$(ogrinfo -al -so $1 |\
+        grep Extent |\
+        sed 's/Extent: //g' |\
+        sed 's/(//g' |\
+        sed 's/)//g' |\
+        sed 's/ - /, /g')
+    EXTENT=`echo $EXTENT | awk -F ',' '{print $1 " " $4 " " $3 " " $2}'`
+    echo -n "$EXTENT"
+}
+
+function ogr_layer_extent() {
+    if [ -z "$2" ]; then
+        echo "Missing arguments. Syntax:"
+        echo "  ogr_extent <input_vector> <layer_name>"
+        return
+    fi
+    EXTENT=$(ogrinfo -so $1 $2 |\
+        grep Extent |\
+        sed 's/Extent: //g' |\
+        sed 's/(//g' |\
+        sed 's/)//g' |\
+        sed 's/ - /, /g')
+    EXTENT=`echo $EXTENT | awk -F ',' '{print $1 " " $4 " " $3 " " $2}'`
+    echo -n "$EXTENT"
+}
+```
+
+Extents can be passed directly into a `gdal_translate` command like so:
+
+```bash
+gdal_translate -projwin $(ogr_extent boundingbox.shp) input.tif clipped_output.tif
+```
+
+or
+
+```bash
+gdal_translate -projwin $(gdal_extent target_crop.tif) input.tif clipped_output.tif
+```
+
+This can be a useful way to quickly crop one raster to the same extent as
+another.  Add these to your `~/.bash_profile` file for easy terminal access.
+
+## From a bounding box to a shapefile
+
+It is possible to create a shapefile of a bounding box starting from simple
+geographic coordinates, without using a script.  It can be done using an
+intermediate raster file, created without an initial data source:
+
+```bash
+gdal_create -outsize 100 100 -burn 1 -ot Byte -a_srs EPSG:4326 -a_ullr 15.027444 41.982819 16.282455 41.03043 bbox.tif
+gdaltindex bbox.shp bbox.tif
+```
+
+An alternative way is directly creating a GeoJSON with the 5 corners of the
+vertexes in a POLYGON:
+
+```bash
+cat >bbox.json <<EOF
+{
+  "type": "FeatureCollection",
+  "name": "bbox",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "location": "bbox"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [15.027444, 41.982819],
+            [16.282455, 41.982819],
+            [16.282455, 41.03043],
+            [15.027444, 41.03043],
+            [15.027444, 41.982819]
+          ]
+        ]
+      }
+    }
+  ]
+}
+EOF
+```

@@ -1,0 +1,36 @@
+[[!meta title="GDAL/OGR cheat sheet"
+        description="Command-line recipes for the GDAL/OGR geodata tools: vector, raster and a few odd jobs."]]
+[[!tag gis gdal]]
+
+Cheat sheet for the GDAL/OGR command-line geodata tools.  It was originally kept
+on [GitHub](https://github.com/fpl/gdal-cheat-sheet) as a fork of a previous release.
+
+* [[Vector operations|gdal/vector]]: inspect, convert, clip, reproject,
+  dissolve, join and load vector data with `ogrinfo` and `ogr2ogr`.
+* [[Raster operations|gdal/raster]]: inspect, convert, reproject, clip,
+  merge and analyse rasters with `gdalinfo`, `gdal_translate`, `gdalwarp`,
+  `gdaldem` and friends.
+* [[Other recipes|gdal/other]]: KML and CSV conversions, MODIS, shell
+  helper functions and bounding boxes.
+
+## Sources
+
+Most recipes come from these pages, to which thanks are due:
+
+* <http://live.osgeo.org/en/quickstart/gdal_quickstart.html>
+* <https://github.com/nvkelso/geo-how-to/wiki/OGR-to-reproject,-modify-Shapefiles>
+* <ftp://ftp.remotesensing.org/gdal/presentations/OpenSource_Weds_Andre_CUGOS.pdf>
+* <http://developmentseed.org/blog/2009/jul/30/using-open-source-tools-make-elevation-maps-afghanistan-and-pakistan/>
+* <http://linfiniti.com/2010/12/a-workflow-for-creating-beautiful-relief-shaded-dems-using-gdal/>
+* <http://linfiniti.com/2009/09/clipping-rasters-with-gdal-using-polygons/>
+* <http://nautilus.baruch.sc.edu/twiki_dmcc/bin/view/Main/OGR_example>
+* <http://www.gdal.org/frmt_hdf4.html>
+* <http://planetflux.adamwilson.us/2010/06/modis-processing-with-r-gdal-and-nco.html>
+* <http://trac.osgeo.org/gdal/wiki/FAQRaster>
+* <http://www.mikejcorey.com/wordpress/2011/02/05/tutorial-create-beautiful-hillshade-maps-from-digital-elevation-models-with-gdal-and-mapnik/>
+* <http://dirkraffel.com/2011/07/05/best-way-to-merge-color-relief-with-shaded-relief-map/>
+* <http://gfoss.blogspot.com/2008/06/gdal-raster-data-tips-and-tricks.html>
+* <http://osgeo-org.1560.x6.nabble.com/gdal-dev-Dissolve-shapefile-using-GDAL-OGR-td5036930.html>
+* <https://www.mapbox.com/tilemill/docs/guides/terrain-data/>
+* <https://gist.github.com/ashaw/0862ec044c45b9aa3c76>
+* <https://github.com/gina-alaska/dans-gdal-scripts>

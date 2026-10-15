@@ -1,0 +1,10 @@
+[[!meta title="Wiki"
+        description="Notes, howtos and loose ends that do not fit a blog post."]]
+Notes, howtos and loose ends that do not fit a blog post.  Pages are
+written in [ikiwiki](https://ikiwiki.info/) flavoured Markdown: link
+other pages with `[[PageName]]` or `[[some text|PageName]]`, and add
+subpages under directories, e.g. `wiki/gis/gdal.mdwn` is `[[gis/gdal]]`.
+
+## All pages
+
+[[!map pages="*"]]

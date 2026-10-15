@@ -1,0 +1,283 @@
+[[!meta title="GDAL/OGR: raster operations"]]
+[[!tag gis gdal]]
+
+Part of the [[GDAL/OGR cheat sheet|gdal]].
+
+[[!toc levels=2]]
+
+## Get raster information
+
+```bash
+gdalinfo input.tif
+```
+
+## List raster drivers
+
+```bash
+gdal_translate --formats
+```
+
+## Force creation of a world file
+
+Requires libgeotiff.
+
+```bash
+listgeo -tfw  mappy.tif
+```
+
+## Report PROJ.4 projection info, including bounding box
+
+Requires libgeotiff.
+
+```bash
+listgeo -proj4 mappy.tif
+```
+
+## Convert between raster formats
+
+```bash
+gdal_translate -of "GTiff" input.grd output.tif
+```
+
+## Convert 16-bit bands (Int16 or UInt16) to Byte type
+
+Useful for Landsat 8 imagery.
+
+```bash
+gdal_translate -of "GTiff" -co "COMPRESS=LZW" -scale 0 65535 0 255 -ot Byte input_uint16.tif output_byte.tif
+```
+
+You can change '0' and '65535' to your image's actual min/max values to
+preserve more color variation or to apply the scaling to other band types.
+Find those numbers with:
+
+```bash
+gdalinfo -mm input.tif | grep Min/Max
+```
+
+## Convert a directory of raster files to another raster format
+
+All files must be of the same format:
+
+```bash
+basename -s.img *.img | xargs -n1 -I % gdal_translate -of "GTiff" %.img %.tif
+```
+
+## Reproject raster
+
+```bash
+gdalwarp -t_srs "EPSG:102003" input.tif output.tif
+```
+
+Be sure to add `-r bilinear` if reprojecting elevation data to prevent funky
+banding artifacts.
+
+## Georeference an unprojected image with known bounding coordinates
+
+```bash
+gdal_translate -of GTiff -a_ullr <top_left_lon> <top_left_lat> <bottom_right_lon> <bottom_right_lat> \
+-a_srs EPSG:4269 input.png output.tif
+```
+
+## Clip raster by bounding box
+
+```bash
+gdalwarp -te <x_min> <y_min> <x_max> <y_max> input.tif clipped_output.tif
+```
+
+## Clip raster to a polygon, with NoData beyond its boundary
+
+```bash
+gdalwarp -dstnodata <nodata_value> -cutline input_polygon.shp input.tif clipped_output.tif
+```
+
+## Crop raster dimensions to a vector bounding box
+
+```bash
+gdalwarp -cutline cropper.shp -crop_to_cutline input.tif cropped_output.tif
+```
+
+## Merge rasters
+
+```bash
+gdal_merge.py -o merged.tif input1.tif input2.tif
+```
+
+Alternatively:
+
+```bash
+gdalwarp input1.tif input2.tif merged.tif
+```
+
+Or, to preserve nodata values:
+
+```bash
+gdalwarp input1.tif input2.tif merged.tif -srcnodata <nodata_value> -dstnodata <merged_nodata_value>
+```
+
+## Stack grayscale bands into a georeferenced RGB
+
+Where `LC81690372014137LGN00` is a Landsat 8 ID and B4, B3 and B2 correspond
+to the R, G and B bands respectively:
+
+```bash
+gdal_merge.py -co "PHOTOMETRIC=RGB" -separate LC81690372014137LGN00_B{4,3,2}.tif -o LC81690372014137LGN00_rgb.tif
+```
+
+## Fix an RGB TIF whose bands don't know they're RGB
+
+```bash
+gdal_merge.py -co "PHOTOMETRIC=RGB" input.tif -o output_rgb.tif
+```
+
+## Export a raster for Google Earth
+
+```bash
+gdal_translate -of KMLSUPEROVERLAY input.tif output.kmz -co FORMAT=JPEG
+```
+
+## Raster calculation (map algebra)
+
+Average two rasters:
+
+```bash
+gdal_calc.py -A input1.tif -B input2.tif --outfile=output.tif --calc="(A+B)/2"
+```
+
+Add two rasters:
+
+```bash
+gdal_calc.py -A input1.tif -B input2.tif --outfile=output.tif --calc="A+B"
+```
+
+And so on.
+
+## Create a hillshade from a DEM
+
+```bash
+gdaldem hillshade -of PNG input.tif hillshade.png
+```
+
+Change the light direction:
+
+```bash
+gdaldem hillshade -of PNG -az 135 input.tif hillshade_az135.png
+```
+
+Use the correct vertical scaling in meters if the input is projected in
+degrees:
+
+```bash
+gdaldem hillshade -s 111120 -of PNG input_WGS1984.tif hillshade.png
+```
+
+## Apply a color ramp to a DEM
+
+First, create a `color-ramp.txt` file, with lines of *height, red, green,
+blue*:
+
+```
+0 110 220 110
+900 240 250 160
+1300 230 220 170
+1900 220 220 220
+2500 250 250 250
+```
+
+Then apply those colors to a DEM:
+
+```bash
+gdaldem color-relief input.tif color_ramp.txt color-relief.tif
+```
+
+## Create slope-shading from a DEM
+
+First, make a slope raster from the DEM:
+
+```bash
+gdaldem slope input.tif slope.tif
+```
+
+Second, create a `color-slope.txt` file, with lines of *slope angle, red,
+green, blue*:
+
+```
+0 255 255 255
+90 0 0 0
+```
+
+Finally, color the slope raster based on the angles in `color-slope.txt`:
+
+```bash
+gdaldem color-relief slope.tif color-slope.txt slopeshade.tif
+```
+
+## Resample (resize) raster
+
+```bash
+gdalwarp -ts <width> <height> -r cubic dem.tif resampled_dem.tif
+```
+
+Entering 0 for either width or height guesses it from the current
+dimensions.
+
+Alternatively:
+
+```bash
+gdal_translate -outsize 10% 10% -r cubic dem.tif resampled_dem.tif
+```
+
+For both of these, `-r cubic` specifies cubic interpolation: when resampling
+continuous data (like a DEM), the default nearest neighbor interpolation can
+result in "stair step" artifacts.
+
+## Burn vector into raster
+
+```bash
+gdal_rasterize -b 1 -i -burn -32768 -l layername input.shp input.tif
+```
+
+## Extract polygons from raster
+
+```bash
+gdal_polygonize.py input.tif -f "GeoJSON" output.json
+```
+
+## Create contours from a DEM
+
+```bash
+gdal_contour -a elev -i 50 input_dem.tif output_contours.shp
+```
+
+## Get values for a specific location in a raster
+
+```bash
+gdallocationinfo -xml -wgs84 input.tif <lon> <lat>
+```
+
+## Convert a GRIB band to .tif
+
+Assumes data for the entire globe in WGS84.  Be sure to specify the band, or
+you may end up with a nonsense RGB image composed of the first three.
+
+```bash
+gdal_translate input.grib -a_ullr -180 -90 180 90 -a_srs EPSG:4326 -b 1 output_band1.tif
+```
+
+## Change scale and offset factors in a raster
+
+```bash
+gdal_edit.py -offset 0 -scale 3.05185094759971e-05 input.tif
+```
+
+## Remove the nodata value in a raster
+
+```bash
+gdal_edit.py -unsetnodata input.tif
+```
+
+## Set the nodata value in a raster
+
+```bash
+gdal_edit.py -a_nodata -32768 input.tif
+```
