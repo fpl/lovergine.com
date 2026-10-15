@@ -26,8 +26,10 @@
 ;; Link resolution follows ikiwiki's "bestlink" rules: from page
 ;; a/b, a link to "c" tries a/b/c, then a/c, then c; exact matches
 ;; win over case-insensitive ones.  Missing targets are rendered as
-;; <span class="createlink">.  Output uses ikiwiki's "usedirs"
-;; layout: page foo/bar becomes PREFIX/foo/bar/index.html.  Every page
+;; <span class="createlink">.  Pages are written flat by default for
+;; the site (page foo/bar becomes PREFIX/foo/bar.html); with #:usedirs?
+;; they follow ikiwiki's "usedirs" layout instead (PREFIX/foo/bar/index.html).
+;; The root page is always PREFIX/index.html.  Every page
 ;; gets parent links, backlinks, tags and a "last edited" line; tag
 ;; pages are generated under TAG-BASE unless a real page exists there.
 ;; Non-page files in the wiki directory are copied verbatim.
@@ -70,7 +72,8 @@
             ikiwiki-reader
             pagetitle
             default-wiki-template
-            wiki))
+            wiki
+            wiki-sitemap-entries))
 
 
 ;;;
@@ -659,6 +662,93 @@ last-edited.  Lists of links are (TEXT . URL) pairs, where URL may be
            (date `(p (@ (class "wiki-lastedit"))
                      "Last edited " ,(blog-date->string date))))))
 
+(define (encode-path name)
+  "Percent-encode each component of the slash-separated NAME."
+  (string-join (map uri-encode (string-split name #\/)) "/"))
+
+(define (wiki-page-url prefix name usedirs?)
+  "Return the absolute URL path of page NAME in the wiki rooted at PREFIX:
+/PREFIX/NAME.html, or /PREFIX/NAME/ when USEDIRS?; the root page `index'
+is /PREFIX/.  The `wiki' builder and `wiki-sitemap-entries' both use this,
+so links and sitemap entries cannot disagree."
+  (let ((root (if (string-null? prefix) "" (string-append "/" prefix))))
+    (cond ((string=? name "index") (string-append root "/"))
+          (usedirs? (string-append root "/" (encode-path name) "/"))
+          (else (string-append root "/" (encode-path name) ".html")))))
+
+(define (wiki-page-file prefix name usedirs?)
+  "Return the output file name of page NAME, matching `wiki-page-url'."
+  (let ((out (if (string-null? prefix) "" (string-append prefix "/"))))
+    (cond ((string=? name "index") (string-append out "index.html"))
+          (usedirs? (string-append out name "/index.html"))
+          (else (string-append out name ".html")))))
+
+(define (read-wiki-sources site directory readers)
+  "Return two values: the <wiki-page> records for the sources in DIRECTORY
+that one of READERS handles, and the names, relative to DIRECTORY, of all
+the other files."
+  (let loop ((rels (if (file-exists? directory)
+                       (sort (scan-directory directory (site-file-filter site))
+                             string<?)
+                       '()))
+             (pages '())
+             (files '()))
+    (match rels
+      (() (values (reverse pages) (reverse files)))
+      ((rel . rest)
+       (let ((source (string-append directory "/" rel)))
+         (match (reader-find readers source)
+           (#f (loop rest pages (cons rel files)))
+           (reader
+            (let-values (((metadata sxml) (reader-read reader source)))
+              (loop rest
+                    (cons (make-wiki-page (source->page-name rel)
+                                          source metadata sxml)
+                          pages)
+                    files)))))))))
+
+(define (page-last-edited page git-dates?)
+  "Return PAGE's last-edited SRFI-19 date: its `updated' metadata, else the
+date of its last git commit when GIT-DATES? is true, else the file mtime."
+  (or (page-ref page 'updated)
+      (let ((secs (or (and git-dates? (git-timestamp (wiki-page-source page)))
+                      (stat:mtime (stat (wiki-page-source page))))))
+        (time-utc->date (make-time time-utc 0 secs)))))
+
+(define* (wiki-sitemap-entries #:key
+                               (directory "wiki")
+                               (prefix "wiki")
+                               (readers (list ikiwiki-reader))
+                               (tag-base "tags")
+                               (git-dates? #f)
+                               (usedirs? #t))
+  "Return a procedure (SITE) -> list of (PATH . DATE) pairs for every page
+the `wiki' builder renders with the same arguments: site-relative PATH
+(e.g. \"/wiki/gdal/\") and last-edited DATE, or #f for generated tag pages.
+Meant for the #:extra-entries argument of the `sitemap' builder; files that
+are copied verbatim are left out."
+  (lambda (site)
+    (let*-values (((directory) (string-trim-right directory #\/))
+                  ((pages files) (read-wiki-sources site directory readers)))
+      (define (path name) (wiki-page-url prefix name usedirs?))
+      (define names (map wiki-page-name pages))
+      (define (page-exists? name)
+        (member (string-downcase name) (map string-downcase names)))
+      ;; Same naming as the builder's generated tag pages: a tag whose page
+      ;; name is already a real page is not generated again.
+      (define tag-names
+        (delete-duplicates
+         (filter-map
+          (lambda (tag)
+            (let ((name (string-append tag-base "/" (normalize-link tag))))
+              (and (not (page-exists? name)) name)))
+          (append-map (lambda (p) (or (page-ref p 'tags) '())) pages))))
+      (append
+       (map (lambda (p)
+              (cons (path (wiki-page-name p)) (page-last-edited p git-dates?)))
+            pages)
+       (map (lambda (name) (cons (path name) #f)) (sort tag-names string<?))))))
+
 (define* (wiki #:key
                (directory "wiki")
                (prefix "wiki")
@@ -667,6 +757,7 @@ last-edited.  Lists of links are (TEXT . URL) pairs, where URL may be
                (readers (list ikiwiki-reader))
                (tag-base "tags")
                (git-dates? #f)
+               (usedirs? #t)
                (template default-wiki-template))
   "Return a builder that renders every page found in DIRECTORY as an
 ikiwiki-style wiki rooted at the URL /PREFIX/.  The root page is
@@ -676,36 +767,18 @@ THEME: a Haunt theme whose layout wraps every page (default: Haunt's).
 READERS: readers for page sources; other files are copied verbatim.
 TAG-BASE: wiki path under which tag pages live (tags/foo).
 GIT-DATES?: use 'git log' for the last-edited date instead of mtime.
+USEDIRS?: write page foo as PREFIX/foo/index.html (URL /PREFIX/foo/)
+instead of the flat PREFIX/foo.html.  See `wiki-page-url'.
 TEMPLATE: procedure (SITE INFO) -> SXML, see default-wiki-template."
   (lambda (site posts)
     (define directory* (string-trim-right directory #\/))
     (define theme* (or theme (blog-theme #:name "Wiki")))
     (define out-prefix (if (string-null? prefix) "" (string-append prefix "/")))
     (define url-root (if (string-null? prefix) "" (string-append "/" prefix)))
-    (define (encode-path name)
-      (string-join (map uri-encode (string-split name #\/)) "/"))
 
     ;; --- Read sources -------------------------------------------------
     (define-values (pages files)
-      (let loop ((rels (if (file-exists? directory*)
-                           (sort (scan-directory directory* (site-file-filter site))
-                                 string<?)
-                           '()))
-                 (pages '())
-                 (files '()))
-        (match rels
-          (() (values (reverse pages) (reverse files)))
-          ((rel . rest)
-           (let ((source (string-append directory* "/" rel)))
-             (match (reader-find readers source)
-               (#f (loop rest pages (cons rel files)))
-               (reader
-                (let-values (((metadata sxml) (reader-read reader source)))
-                  (loop rest
-                        (cons (make-wiki-page (source->page-name rel)
-                                              source metadata sxml)
-                              pages)
-                        files)))))))))
+      (read-wiki-sources site directory* readers))
 
     ;; --- Index of everything a link can point to --------------------
     (define kinds (make-hash-table))      ; name -> page | file | (tag . T)
@@ -762,9 +835,7 @@ TEMPLATE: procedure (SITE INFO) -> SXML, see default-wiki-template."
     (define (url name)
       (match (hash-ref kinds name)
         ('file (string-append url-root "/" (encode-path name)))
-        (_ (if (string=? name "index")
-               (string-append url-root "/")
-               (string-append url-root "/" (encode-path name) "/")))))
+        (_ (wiki-page-url prefix name usedirs?))))
 
     (define (title-of name)
       (match (hash-ref kinds name)
@@ -924,10 +995,7 @@ TEMPLATE: procedure (SITE INFO) -> SXML, see default-wiki-template."
        pass1))
 
     (define (last-edited page)
-      (or (page-ref page 'updated)
-          (let ((secs (or (and git-dates? (git-timestamp (wiki-page-source page)))
-                          (stat:mtime (stat (wiki-page-source page))))))
-            (time-utc->date (make-time time-utc 0 secs)))))
+      (page-last-edited page git-dates?))
 
     (define (parents name)
       (if (string=? name "index")
@@ -944,9 +1012,7 @@ TEMPLATE: procedure (SITE INFO) -> SXML, see default-wiki-template."
                              (loop rest full)))))))))
 
     (define (output-file name)
-      (if (string=? name "index")
-          (string-append out-prefix "index.html")
-          (string-append out-prefix name "/index.html")))
+      (wiki-page-file prefix name usedirs?))
 
     (define (emit name body tags last backlinks?)
       (let ((page-title (title-of name))

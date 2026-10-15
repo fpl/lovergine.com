@@ -79,6 +79,7 @@ hard-coded 'tags/TAG.html' naming convention."
                    (post-prefix #f)
                    (filter posts/reverse-chronological)
                    (extra-paths '("/"))
+                   (extra-entries (lambda (site) '()))
                    (tags? #t))
   "Return a builder procedure that renders a sitemap.xml listing every
 post plus EXTRA-PATHS (the site root by default).  All arguments are
@@ -95,6 +96,10 @@ in case some posts should be excluded from the sitemap.
 EXTRA-PATHS: A list of additional site-relative paths to include,
 such as the front page or any flat pages.
 
+EXTRA-ENTRIES: A procedure (SITE) -> list of (PATH . DATE) pairs, DATE
+being a SRFI-19 date or #f, for pages other builders produce, e.g.
+(wiki-sitemap-entries) from (lovergine wiki).
+
 TAGS?: When true (the default), also include the tag index and every
 per-tag page produced by (haunt builder tag-pages)."
   (lambda (site posts)
@@ -105,7 +110,11 @@ per-tag page produced by (haunt builder tag-pages)."
                                                        site post)
                                             (post-date post)))
                                posts))
-           (extra-entries (map (cut url-entry site <>) extra-paths))
+           (extra-url-entries (append
+                           (map (cut url-entry site <>) extra-paths)
+                           (map (match-lambda
+                                  ((path . date) (url-entry site path date)))
+                                (extra-entries site))))
            (tag-entries (if tags?
                              (map (cut url-entry site <>) (tag-paths posts))
                              '())))
@@ -113,7 +122,7 @@ per-tag page produced by (haunt builder tag-pages)."
                            `(urlset
                              (@ (xmlns
                                  "http://www.sitemaps.org/schemas/sitemap/0.9"))
-                             ,@extra-entries
+                             ,@extra-url-entries
                              ,@post-entries
                              ,@tag-entries)
                            sxml->xml*))))

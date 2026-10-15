@@ -419,7 +419,12 @@
                                         #:posts-per-page 10)
                                   (atom-feed)
                                   (rss-feed)
-                                  (sitemap)
+                                  (sitemap #:extra-entries
+                                           (wiki-sitemap-entries
+                                            #:directory "wiki"
+                                            #:prefix "wiki"
+                                            #:git-dates? #t
+                                            #:usedirs? #f))
                                   (atom-feeds-by-tag)
                                   ;; Add tag-pages builder with no prefix (to fix the path issue)
                                   (tag-pages #:theme lovergine.com-theme
@@ -435,7 +440,8 @@
                                    #:title "Wiki"
                                    #:theme lovergine.com-theme
                                    #:template lovergine-wiki-template
-                                   #:git-dates? #t)
+                                   #:git-dates? #t
+                                   #:usedirs? #f)
                              (static-directory "css")
                              (static-directory "fonts")
                              (static-directory "images")
