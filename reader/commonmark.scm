@@ -120,12 +120,7 @@ and removes consecutive hyphens."
     ;; Fenced code block with a language, e.g. ```bash: highlight it when
     ;; a lexer is known, else leave it as is.
     (('code ('@ . attrs) (? string? source))
-     (let* ((class (and=> (assq 'class attrs) cadr))
-            (lang (and class
-                       (string-prefix? "language-" class)
-                       (string-drop class (string-length "language-"))))
-            (spans (and lang (highlight-source lang source))))
-       `(code (@ ,@attrs) ,@(or spans (list source)))))
+     `(code (@ ,@attrs) ,@(highlight-code-body attrs (list source))))
 
     ;; Any other element with attributes
     (((? symbol? tag) ('@ . attrs) . body)

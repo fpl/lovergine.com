@@ -51,6 +51,7 @@
              (planet config)
              (reader commonmark)
              (lovergine open-graph)
+             (lovergine wiki)
 
              (commonmark)
              (syntax-highlight)
@@ -199,6 +200,7 @@
                             (li ,(link "contact" "/contact.html"))
                             (li ,(link "colophon" "/colophon.html"))
                             (li ,(link "tags" "/tags/"))
+                            (li ,(link "wiki" "/wiki/"))
                             (li ,(link "planet" "/planet/"))
                             (li ,(link "feeds" "/planet/sources.html"))
                             (li (@ (class "fade-text")) " ")))
@@ -345,6 +347,17 @@
                   "Untitled")))
     ((theme-layout lovergine.com-theme) site title body)))
 
+;; Wiki pages: ikiwiki-flavoured Markdown (.mdwn) under wiki/, rendered
+;; under /wiki/ by (lovergine wiki).  The template wraps the stock wiki
+;; body only to hand Open Graph tags over to the layout, the same way
+;; #:post-template does for posts.
+(define (lovergine-wiki-template site info)
+  (current-post-og-tags
+   (open-graph-meta-tags %site-title %site-domain (assq-ref info 'title)
+                         #:path (assq-ref info 'url)
+                         #:description (assq-ref info 'description)))
+  (default-wiki-template site info))
+
 ;; HAUNT_MODE controls which builders run, so the slow planet feed
 ;; fetches can be split from the fast post/page build (see Makefile
 ;; targets `build`, `planet`, `full`).  Unset (or any other value)
@@ -417,6 +430,12 @@
                                              #:title "All Tags")))
                        (list (flat-pages "pages"
                                          #:template custom-flat-page-template)
+                             (wiki #:directory "wiki"
+                                   #:prefix "wiki"
+                                   #:title "Wiki"
+                                   #:theme lovergine.com-theme
+                                   #:template lovergine-wiki-template
+                                   #:git-dates? #t)
                              (static-directory "css")
                              (static-directory "fonts")
                              (static-directory "images")

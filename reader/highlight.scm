@@ -32,7 +32,8 @@
   #:export (lex-shell
             lex-ini
             language->lexer
-            highlight-source))
+            highlight-source
+            highlight-code-body))
 
 ;;; Shell lexer.  Not a real parser: it only has to tell comments,
 ;;; strings, variables, options, operators and keywords from plain words.
@@ -135,3 +136,17 @@ has no lexer."
   (let ((lexer (language->lexer lang)))
     (and lexer
          (highlights->sxml (highlight lexer source)))))
+
+(define (highlight-code-body attrs body)
+  "Return the children of a <code> element with SXML attributes ATTRS (a list
+like ((class \"language-bash\"))) and children BODY.  BODY is highlighted when
+it is a single string and the language-* class names a known language;
+otherwise it is returned unchanged."
+  (let* ((class (and=> (assq 'class attrs) cadr))
+         (lang (and (string? class)
+                    (string-prefix? "language-" class)
+                    (string-drop class (string-length "language-")))))
+    (or (and lang
+             (pair? body) (null? (cdr body)) (string? (car body))
+             (highlight-source lang (car body)))
+        body)))

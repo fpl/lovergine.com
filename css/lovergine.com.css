@@ -178,6 +178,13 @@ footer {
     color: #ddd;
 }
 
+/* The menu ends with a blank <li class="fade-text">.  With its padding it
+   wraps onto an empty line of its own as soon as the row is nearly full
+   (first in Firefox), pushing the menu border down. */
+.nav li.fade-text {
+    padding: 0;
+}
+
 /* Summaries */
 
 .summary {
@@ -527,4 +534,47 @@ h2.site-title {
 
 .planet-feeds-list li {
   padding: 0.4rem 0;
+}
+
+/* Wiki pages */
+
+.wiki-parentlinks {
+    font-family: 'Linux Biolinum',sans;
+    font-size: 80%;
+    color: var(--d);
+}
+
+.wiki-toc {
+    display: inline-block;
+    font-size: 85%;
+    padding: 0.5rem 1.5rem 0.5rem 0;
+    background-color: var(--a-bg);
+    border-radius: 4px;
+}
+
+.wiki-toc ul ul {
+    padding-left: 1.5rem;
+}
+
+/* Link to a page that does not exist (yet). */
+.createlink {
+    color: var(--d);
+    border-bottom: 1px dashed var(--d);
+    cursor: help;
+}
+
+.wiki-backlinks,
+.wiki-lastedit {
+    color: var(--d);
+    font-size: 80%;
+}
+
+.wiki-backlinks {
+    margin-top: 3rem;
+    border-top: 1px solid #ccc;
+    padding-top: 1rem;
+}
+
+.wiki-lastedit {
+    margin-top: 0;
 }
