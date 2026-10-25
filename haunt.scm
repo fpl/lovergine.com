@@ -446,6 +446,7 @@
                              (static-directory "fonts")
                              (static-directory "images")
                              (static-directory "js")
+                             (static-directory "downloads")
                              (static-directory "videos")))
                       '())
                   (if %build-planet?
