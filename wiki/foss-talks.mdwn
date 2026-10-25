@@ -1,0 +1,49 @@
+[[!meta title="FOSS-related talks"
+        description="A reasoned list of past talks in public events about Linux and FOSS"]]
+[[!tag foss talks linux]]
+
+This is a reasoned list of slides I wrote and used in past events about Linux and FOSS.
+Most are in Italian and were presented at local dissemination meetings.
+
+I have been for some years the president of a local Linux Users Group (now
+closed) in my town. We organized multiple times the local edition of the 
+[Italian Linux Day](https://www.linuxday.it/) in the month of
+October in various venues; therefore, I generally managed to make either
+introductory presentations about Linux and free software or some more technical
+presentations. Now sometimes I still participate to the same event as 
+invited speaker. 
+
+Occasionally, I also gave speeches for local meetings of the association, or
+participated in events organized by others elsewhere.
+
+Slides are generally in PDF format for simplicity, but in some cases animations
+are not rendered correctly in such a format. In those cases, the only alternative
+is to download the provided current OpenDocument Presentation (LibreOffice Impress)
+format. Note also that such slides are quite old and the layout can have minor
+glitches in their layouts, because of font rendering changes in the meantime.
+
+If a different license is not specified within them, assume the slides are released
+under CC-BY-SA-NC license.
+
+## LinuxDay talks
+
+* LinuxDay 2002 — [Linux: La Cattedrale e il Bazaar](/downloads/LD2002.pdf)
+* LinuxDay 2003 — [Introductory talk](/downloads/LD2003-intro.odp)
+* LinuxDay 2003 — [Il processo di sviluppo in Debian](/downloads/LD2003-debian.pdf)
+* LinuxDay 2005 — [Una introduzione alla freelosophy](/downloads/LD2005-freelosophy.pdf)
+* LinuxDay 2005 — [The Embedded GNU/Linux Planet](/downloads/LD2005-embedded.pdf)
+* LinuxDay 2006 — [Entering Debian Development](/downloads/LD2006-entering-debian.pdf)
+* LinuxDay 2007 — [Un anno di free software](/downloads/LD2007-intro.pdf)
+* LinuxDay 2007 — [FOSS4GIS: Breve sguardo al FOSS per applicazioni GIS ](/downloads/LD2007-foss4gis.pdf)
+* LinuxDay 2017 — [Privacy e sicurezza ai tempi del cloud](/downloads/LD2017.pdf)
+* LinuxDay 2018 — [Just for fun: too smart to fail](/downloads/LD2018.pdf)
+* LinuxDay 2019 — [L’AI ai tempi del social](/downloads/LD2019.pdf)
+* LinuxDay 2023 — [Da hobbisti a mainstream](/downloads/LD2023.pdf)
+* LinuxDay 2026 — [GNU Guix: pacchetti, ambienti e rollback senza paura](/downloads/LD2026-guix.pdf)
+
+## Other talks
+
+* Debian IT Community Conference 2008 — [Sistemi di patch management](/downloads/DCC-IT-08-patch.pdf)
+* Seminar for UDU (Unione degli Universitari) 2008 — [Basi di Freelosophy](/downloads/UDU-2008.pdf)
+* MateraCamp 2009 — [Software libero e informazione geografica libera: una opportunità di sviluppo sostenibile](/downloads/MC09.pdf)
+* LugBari April-June 2005, part of a 30 hrs internal course  — [Introduzione a LAMP](/downloads/Corso2005-lamp.pdf)
