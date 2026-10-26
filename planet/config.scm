@@ -73,4 +73,8 @@
      (url  . "https://shkspr.mobi/blog/feed/atom/")
      (link . "https://shkspr.mobi/"))
 
+    ((name . "Copernicus Updates")
+     (url  . "https://dataspace.copernicus.eu/rss.xml")
+     (link . "https://dataspace.copernicus.eu/"))
+
     ))
