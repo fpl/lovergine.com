@@ -77,29 +77,81 @@
 ;;; Date parsing (handles ISO 8601 and RFC 822)
 ;;;
 
-(define %date-formats
-  '("~Y-~m-~dT~H:~M:~S~z"
-    "~a, ~d ~b ~Y ~H:~M:~S ~z"))
-
 (define %epoch (make-date 0 0 0 0 1 1 1970 0))
+
+;;; SRFI-19's ~a/~b match day and month names in the current locale, and
+;;; ~z rejects zone names such as UTC or GMT, so RFC 822 dates are parsed
+;;; by hand.
+(define %rfc822-months
+  '("jan" "feb" "mar" "apr" "may" "jun" "jul" "aug" "sep" "oct" "nov" "dec"))
+
+;;; Zone names allowed by RFC 822, as offsets from UTC in hours.
+(define %rfc822-zones
+  '(("ut" . 0) ("utc" . 0) ("gmt" . 0) ("z" . 0)
+    ("est" . -5) ("edt" . -4) ("cst" . -6) ("cdt" . -5)
+    ("mst" . -7) ("mdt" . -6) ("pst" . -8) ("pdt" . -7)))
+
+(define %rfc822-rx
+  (make-regexp
+   (string-append "^([A-Za-z]+,)? *([0-9]{1,2}) +([A-Za-z]+) +([0-9]{2,4}) +"
+                  "([0-9]{1,2}):([0-9]{2})(:([0-9]{2}))? *([A-Za-z]+|[+-][0-9]{4})?$")
+   regexp/extended))
+
+(define (rfc822-zone-offset zone)
+  "Return the offset in seconds for ZONE, a name or +HHMM; UTC if unknown."
+  (cond
+    ((not zone) 0)
+    ((memv (string-ref zone 0) '(#\+ #\-))
+     (let ((n (string->number (substring zone 1))))
+       (* (if (char=? (string-ref zone 0) #\-) -1 1)
+          (+ (* 3600 (quotient n 100)) (* 60 (remainder n 100))))))
+    (else (* 3600 (or (assoc-ref %rfc822-zones (string-downcase zone)) 0)))))
+
+(define (parse-rfc822-date str)
+  "Parse STR as an RFC 822 date, or return #f."
+  (let ((m (regexp-exec %rfc822-rx (string-trim-both str))))
+    (and m
+         (let* ((month (list-index (lambda (name)
+                                     (string-prefix? name
+                                                     (string-downcase
+                                                      (match:substring m 3))))
+                                   %rfc822-months))
+                (year  (string->number (match:substring m 4))))
+           (and month
+                (false-if-exception
+                  (make-date 0
+                             (if (match:substring m 8)
+                                 (string->number (match:substring m 8))
+                                 0)
+                             (string->number (match:substring m 6))
+                             (string->number (match:substring m 5))
+                             (string->number (match:substring m 2))
+                             (+ month 1)
+                             ;; Two-digit years are obsolete but still seen.
+                             (cond ((>= year 100) year)
+                                   ((< year 50) (+ 2000 year))
+                                   (else (+ 1900 year)))
+                             (rfc822-zone-offset (match:substring m 9)))))))))
+
+(define (parse-iso8601-date str)
+  "Parse STR as an ISO 8601 date, or return #f."
+  ;; SRFI-19 ~z does not accept colon-separated offsets (+HH:MM);
+  ;; strip the colon so +01:00 becomes +0100.
+  (let* ((m (string-match "([+-][0-9][0-9]):([0-9][0-9])$" str))
+         (s (if m
+                (string-append (substring str 0 (match:start m 1))
+                               (match:substring m 1)
+                               (match:substring m 2))
+                str)))
+    (false-if-exception (string->date s "~Y-~m-~dT~H:~M:~S~z"))))
 
 (define (parse-date-string str)
   "Parse STR into an SRFI-19 date. Falls back to the epoch on failure."
   (if (not (string? str))
       %epoch
-      ;; SRFI-19 ~z does not accept colon-separated offsets (+HH:MM);
-      ;; strip the colon so +01:00 becomes +0100.
-      (let* ((m (string-match "([+-][0-9][0-9]):([0-9][0-9])$" str))
-             (s (if m
-                    (string-append (substring str 0 (match:start m 1))
-                                   (match:substring m 1)
-                                   (match:substring m 2))
-                    str)))
-        (let loop ((fmts %date-formats))
-          (if (null? fmts)
-              %epoch
-              (or (false-if-exception (string->date s (car fmts)))
-                  (loop (cdr fmts))))))))
+      (or (parse-iso8601-date str)
+          (parse-rfc822-date str)
+          %epoch)))
 
 (define (date->sort-key d)
   (time-second (date->time-utc d)))
