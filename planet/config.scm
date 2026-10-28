@@ -77,4 +77,8 @@
      (url  . "https://dataspace.copernicus.eu/rss.xml")
      (link . "https://dataspace.copernicus.eu/"))
 
+    ((name . "Perl Planet")
+     (url  . "https://perl.theplanetarium.org/atom.xml")
+     (link . "https://perl.theplanetarium.org/"))
+
     ))
