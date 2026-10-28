@@ -115,6 +115,19 @@ Or, to preserve nodata values:
 gdalwarp input1.tif input2.tif merged.tif -srcnodata <nodata_value> -dstnodata <merged_nodata_value>
 ```
 
+## Create multi-band rasters (RGB) from grey-level bands
+
+```bash
+gdal_merge.py -o multiband.tif -separate band1.tif band2.tif band3.tif
+``````
+
+Alternatively a  VRT can be used
+
+```bash
+gdalbuildvrt -separate multiband.vrt band1.tif band2.tif band3.tif # even multi-resolution
+
+```
+
 ## Stack grayscale bands into a georeferenced RGB
 
 Where `LC81690372014137LGN00` is a Landsat 8 ID and B4, B3 and B2 correspond

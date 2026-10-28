@@ -78,6 +78,20 @@ every multipolygon.  If not, parts need to be removed.
 ogrinfo -dialect SQLite -sql "UPDATE input SET geometry = ST_GeometryN(geometry,1)" input.shp
 ```
 
+## Convert 3D POLYGONS to 2D POLYGONS
+
+```bash
+ogr2ogr -lco "SHPT=POLYGON"  dst-2d.shp  src-3d.shp
+```
+
+## Convert an XLSX to a Shapefile
+
+```bash
+ogr2ogr -f CSV file.csv file.xlsx
+ogr2ogr -a_srs EPSG:4326 -oo X_POSSIBLE_NAMES=Longitude -oo Y_POSSIBLE_NAMES=Latitude  file.shp file.csv
+
+```
+
 ## Add an index to a shapefile
 
 Add an index on an attribute:
