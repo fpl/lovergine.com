@@ -62,7 +62,7 @@ _Once you start down the dark path, forever will it dominate your destiny_. (Yod
 
 [1][Denmark abandoned plans to ditch MS Office](https://www.neowin.net/news/denmark-has-abandoned-plans-to-ditch-microsoft-office-after-technical-problems/) 
 
-[2][Friburg diumping OpenOffice for Microsoft](https://www.theregister.com/software/2012/11/20/german-city-dumping-openoffice-for-microsoft/719037)
+[2][Friburg dumping OpenOffice for Microsoft](https://www.theregister.com/software/2012/11/20/german-city-dumping-openoffice-for-microsoft/719037)
 
 [3][The LiMux project in Munich](https://en.wikipedia.org/wiki/LiMux)
 
