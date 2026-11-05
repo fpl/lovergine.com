@@ -1,7 +1,7 @@
 title: Talk at LinuxDay 2026. Playing with Guix on foreign distributions.
 date: 2026-09-21 19:30
 mastodon: https://floss.social/@gisgeek/117310335639297894
-tags: technology, event, guix, talk, distribution
+tags: technology, event, guix, talk, distributions
 summary: Linux Day 2026 talk about Guix for newbies. 
 ---
 
