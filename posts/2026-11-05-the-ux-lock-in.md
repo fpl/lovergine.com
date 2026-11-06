@@ -24,7 +24,7 @@ proprietary software. We've seen the same scene for years. LibreOffice against
 Microsoft Office, Gimp against Photoshop, FreeCAD against AutoCAD, and many
 others wannabe functional replacements. Either the features or the interfaces
 are not comparable, and users have legitimate concerns about the future of such
-alternatives, especially when they are basing their own business on them,
+alternatives, especially when they are basing their own business on them.
 
 A recent variant is the new set of vibecoded programs (the Artcraft series [5])
 that try to replicate the same user interfaces as Adobe tools and, again,
