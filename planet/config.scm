@@ -81,4 +81,8 @@
      (url  . "https://perl.theplanetarium.org/atom.xml")
      (link . "https://perl.theplanetarium.org/"))
 
+    ((name . "Lisp Planet")
+     (url  . "https://planet.lisp.org/rss20.xml")
+     (link . "https://planet.lisp.org/"))
+
     ))
