@@ -1,4 +1,4 @@
-title: New frontiers of the FOSS contributions.
+title: New crossroads for the FOSS contributions.
 date: 2026-10-05 12:30
 mastodon: https://floss.social/@gisgeek/117387976864689750
 tags: technology, foss, society, development, personal computing, programming, ai, aiad
