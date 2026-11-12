@@ -1,0 +1,27 @@
+[[!meta title="GIS, geocomputation and other talks"
+        description="A list of my lectures and talks about GIS, geocomputation and other informatics lectures or talks"]]
+[[!tag gis geo talks]]
+
+Here, I've collected a few slides I've used over multiple years for
+here-or-there lectures, often paired with hands-on training. Sometimes I don’t
+even remember the details of the specific event. For some years, I gave lectures
+for a Master of Remote Sensing and other courses, so I collected a few slides I
+used in such events. Often, I recycled the same slides for other events,
+adapting them to the goals.  I’m generally very verbose in lectures, and slides
+are generally the skeleton for my long ramblings on a topic. You have been
+warned.
+
+If a different license is not specified within them, assume the slides are released
+under CC-BY-SA-NC license.
+
+## GIS/geospatial technologies talks
+
+* Introductory lecture to FOSS geomatics for the Master in Remote Sensing (Italian, circa 2008-2011)  — [Elementi di geoinformatica: un approccio con software libero](/downloads/gistlr.pdf)
+* An introductory lecture to OpenStreetMap (English, 2015)  — [OpenStreetMap (Openwhatevermap?) Lights and shadows](/downloads/osmwhatever_en.pdf)
+* An introduction to CNES Orfeo Toolbox (English, 2014)  — [OTB: An introduction for not-so-dummies](/downloads/otb-tutorial.pdf)
+* An introduction to dependencies management in Python and HPC environments for scientists, a lecture for a [Spatial Ecology Geocomputation course](https://www.spatial-ecology.net/docs/build/html/COURSESAROUNDTHEWORLD/course_geocomp_geoanlysis_04_2025.html) (English, November 2025)  — [Managing Third-Party Libraries: A Survival Guide for Data Scientists](/downloads/dependency_management_in_data_science.pdf)
+
+## Other talks
+
+* An introductory lecture about source code control systems for dummies at Università Ca' Foscari (English ,2022) — [Tools for source code management and collaborative development: git, github and friends](/downloads/Git_Github_and_friends.pdf)
+* An introductory lecture to High-Performance Computing (Italian, 2000) — [High Performance Computing](/downloads/hpc.pdf)
