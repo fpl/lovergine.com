@@ -3,3 +3,4 @@
 site/*
 _site-build/
 _site-planet/
+*.log
