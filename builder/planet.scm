@@ -160,7 +160,14 @@
 ;;; HTML stripping, entity decoding, and summary extraction
 ;;;
 
-(define %html-tag-rx (make-regexp "<[^>]*>" regexp/extended))
+;;; A comment, or a tag whose quoted attribute values may contain `>'
+;;; (e.g. alt="the text </>"; SSAX decodes &gt; inside CDATA, so such
+;;; values reach us unescaped).  A plain "<[^>]*>" would stop at that `>'
+;;; and leak the rest of the tag into the excerpt.
+(define %html-tag-rx
+  (make-regexp
+   "<!--([^-]|-[^-])*--+>|<[A-Za-z/!?][^>\"']*((\"[^\"]*\"|'[^']*')[^>\"']*)*>"
+   regexp/extended))
 
 (define (strip-html str)
   "Remove HTML tags from STR."
@@ -274,6 +281,27 @@
     (date      . ,date)
     (summary   . ,(extract-summary raw-summary))))
 
+;;; Atom text constructs come in three flavours: type="text" and "html"
+;;; hold a plain string, but type="xhtml" holds an element tree
+;;; (<content type="xhtml"><div xmlns="...">...</div></content>), which
+;;; `(atom:content *text*)' does not reach.
+(define (sxml-text node)
+  "Concatenate all the character data below the SXML NODE."
+  (cond ((string? node) node)
+        ((not (pair? node)) "")
+        ((eq? (car node) '@) "")
+        ((symbol? (car node)) (string-concatenate (map sxml-text (cdr node))))
+        (else (string-concatenate (map sxml-text node)))))
+
+(define (atom-text-field entry tag)
+  "Return the text of the child TAG of the Atom ENTRY, whatever its type
+attribute, or #f when absent or blank."
+  (let ((nodes ((sxpath (list tag)) entry)))
+    (and (pair? nodes)
+         (let ((text (sxml-text (car nodes))))
+           (and (not (string-null? (string-trim-both text)))
+                text)))))
+
 ;;; Atom entries may carry several <link> elements (alternate, replies,
 ;;; edit, self, enclosure...).  Blogger, for instance, lists the comments
 ;;; feed (rel="replies") before the post permalink, so taking the first
@@ -323,9 +351,9 @@ returns a replies/edit/self feed URL."
                           (false-if-exception
                             ((sxpath1 '(atom:updated *text*)) entry))))
              (summary (or (false-if-exception
-                            ((sxpath1 '(atom:summary *text*)) entry))
+                            (atom-text-field entry 'atom:summary))
                           (false-if-exception
-                            ((sxpath1 '(atom:content *text*)) entry)))))
+                            (atom-text-field entry 'atom:content)))))
         (and link
              (make-entry name blog-link title link
                          (parse-date-string date-s)
