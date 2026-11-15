@@ -274,6 +274,42 @@
     (date      . ,date)
     (summary   . ,(extract-summary raw-summary))))
 
+;;; Atom entries may carry several <link> elements (alternate, replies,
+;;; edit, self, enclosure...).  Blogger, for instance, lists the comments
+;;; feed (rel="replies") before the post permalink, so taking the first
+;;; link yields a feed URL instead of the article.
+(define (link-attribute link name)
+  "Return attribute NAME (a symbol) of the SXML element LINK as a string,
+or #f when absent."
+  (let ((attrs (and (pair? (cdr link)) (pair? (cadr link))
+                    (eq? (caadr link) '@)
+                    (cdadr link))))
+    (and attrs
+         (let ((a (assq name attrs)))
+           (and a (pair? (cdr a)) (cadr a))))))
+
+(define (html-link-type? type)
+  (or (not type)
+      (string-prefix? "text/html" type)
+      (string-prefix? "application/xhtml+xml" type)))
+
+(define (atom-entry-link entry)
+  "Return the permalink URL of the Atom ENTRY, or #f.  Only links with
+rel=\"alternate\" (the Atom default when rel is missing) are considered,
+those typed as HTML being preferred.  Unlike the first <link>, this never
+returns a replies/edit/self feed URL."
+  (let* ((links (filter-map           ; not `filter': (sxml xpath) shadows it
+                 (lambda (l)
+                   (and (link-attribute l 'href)
+                        (equal? (or (link-attribute l 'rel) "alternate")
+                                "alternate")
+                        l))
+                 ((sxpath '(atom:link)) entry)))
+         (best  (or (find (lambda (l) (html-link-type? (link-attribute l 'type)))
+                          links)
+                    (and (pair? links) (car links)))))
+    (and best (link-attribute best 'href))))
+
 (define (parse-atom-entry entry name blog-link)
   "Parse one Atom ENTRY alist. Returns #f if the entry is unusable."
   (catch #t
@@ -281,8 +317,7 @@
       (let* ((title   (or (false-if-exception
                             ((sxpath1 '(atom:title *text*)) entry))
                           "(no title)"))
-             (link    (false-if-exception
-                        ((sxpath1 '(atom:link @ href *text*)) entry)))
+             (link    (false-if-exception (atom-entry-link entry)))
              (date-s  (or (false-if-exception
                             ((sxpath1 '(atom:published *text*)) entry))
                           (false-if-exception
