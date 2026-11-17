@@ -8,10 +8,10 @@
   <g transform="translate(195,135) scale(4.5)">
     <path d="M25,10 h130 a15,15 0 0 1 15,15 v100 a15,15 0 0 1 -15,15 h-80 l-20,30 v-30 h-30 a15,15 0 0 1 -15,-15 v-100 a15,15 0 0 1 15,-15 z"
           fill="none" stroke="#e8792e" stroke-width="4"/>
-    <text x="90" y="97" text-anchor="middle" font-family="Linux Biolinum,DejaVu Sans,sans-serif"
+    <text x="90" y="97" text-anchor="middle" font-family="Libertinus Sans,Linux Biolinum,DejaVu Sans,sans-serif"
           font-weight="bold" font-size="80" fill="#e8792e">FT</text>
   </g>
 
-  <text x="600" y="1065" text-anchor="middle" font-family="Linux Biolinum,DejaVu Sans,sans-serif"
+  <text x="600" y="1065" text-anchor="middle" font-family="Libertinus Sans,Linux Biolinum,DejaVu Sans,sans-serif"
         font-weight="bold" font-size="120" fill="#a8a095" letter-spacing="2">lovergine.com</text>
 </svg>

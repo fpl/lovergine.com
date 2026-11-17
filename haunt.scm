@@ -190,7 +190,7 @@
                                          (text (@ (class "logo-text")
                                                   (x "90") (y "95")
                                                   (text-anchor "middle")
-                                                  (font-family "Linux Biolinum, sans-serif")
+                                                  (font-family "Libertinus Sans, sans-serif")
                                                   (font-weight "bold")
                                                   (font-size "80"))
                                                "FT"))
