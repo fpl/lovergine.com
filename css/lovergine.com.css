@@ -219,8 +219,11 @@ footer {
 }
 
 /* Narrow screens: collapse the menu behind the hamburger button, one
-   item per line.  Without JavaScript the plain wrapped list is kept. */
-@media (max-width: 800px) {
+   item per line.  Without JavaScript the plain wrapped list is kept.
+   The threshold is where the one-row menu stops fitting the container
+   (it needs ~775px; the container is 160px narrower than the window up
+   to 1140px), with some slack for font differences between browsers. */
+@media (max-width: 1000px) {
     html.js .nav-toggle {
         display: inline-flex;
     }
