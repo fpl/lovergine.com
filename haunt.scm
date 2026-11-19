@@ -147,9 +147,11 @@
          #:layout
          (lambda (site title body)
            `((doctype "html")
+             (html (@ (lang "en"))
              (head
               (meta (@ (charset "utf-8")))
-              (meta (@ (lang "en")))
+              (meta (@ (name "viewport")
+                       (content "width=device-width, initial-scale=1")))
               (meta (@ (name "fediverse:creator")(content "@gisgeek@floss.social")))
               (link (@ (rel "alternate")
                    (type "application/rss+xml")
@@ -173,13 +175,14 @@
               ;; Apply any stored forced theme before first paint, so
               ;; there's no flash of the wrong colors.  The click
               ;; handling lives in /js/theme-toggle.js.
-              (script "(function(){try{var m=localStorage.getItem('theme');if(m==='light'||m==='dark'){document.documentElement.setAttribute('data-theme',m);}}catch(e){}})();")
-              (script (@ (src "/js/theme-toggle.js") (defer ""))))
+              (script "document.documentElement.classList.add('js');(function(){try{var m=localStorage.getItem('theme');if(m==='light'||m==='dark'){document.documentElement.setAttribute('data-theme',m);}}catch(e){}})();")
+              (script (@ (src "/js/theme-toggle.js") (defer "")))
+              (script (@ (src "/js/nav-toggle.js") (defer ""))))
             (body
               (div (@ (class "hide"))(a (@ (rel "me")(href "https://floss.social/@gisgeek")) "Mastodon"))
               (div (@ (class "container"))
                    (div (@ (class "nav"))
-                        (ul 
+                        (ul (@ (id "site-menu"))
                             (li (h2 (@ (class "site-title"))
                                     (svg (@ (class "site-logo")
                                             (xmlns "http://www.w3.org/2000/svg")
@@ -194,7 +197,13 @@
                                                   (font-weight "bold")
                                                   (font-size "80"))
                                                "FT"))
-                                     ,(site-title site)))
+                                     ,(site-title site))
+                                (button (@ (type "button")
+                                           (class "nav-toggle")
+                                           (aria-controls "site-menu")
+                                           (aria-expanded "false")
+                                           (aria-label "Menu")
+                                           (title "Menu"))))
                             (li ,(link "home" "/"))
                             (li ,(link "about" "/about.html"))
                             (li ,(link "contact" "/contact.html"))
@@ -225,7 +234,7 @@
                               ", a static site generator written in "
                               (a (@ (href "https://gnu.org/software/guile"))
                                  "GNU Guile")
-                              "."))))))
+                              ".")))))))
          #:post-template
          (lambda (post)
            (current-post-og-tags

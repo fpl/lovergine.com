@@ -11,9 +11,12 @@
 body {
     color: var(--text);
     background-color: var(--bg);
-    font-size: 24px;
+    /* Fluid: 18px on phones, up to 24px from ~830px wide. */
+    font-size: clamp(18px, 1.2vw + 14px, 24px);
     font-family: 'Libertinus Serif',serif;
-    line-height: 140%;
+    /* Unitless: a percentage would be inherited as a fixed length. */
+    line-height: 1.4;
+    overflow-wrap: break-word;
     text-rendering: optimizeLegibility;
 }
 
@@ -48,7 +51,7 @@ h1, h2, h3 {
 
 h1 {
     font-size: 150%;
-    line-height: 110%;
+    line-height: 1.1;
 }
 
 h2 {
@@ -73,19 +76,19 @@ a:visited {
     color: var(--v);
 }
 
-td {
-    margin: 2px;
-}
-
 pre {
     font-family: "Inconsolata",monospace;
-    line-height: 110%;
-    min-width: 100%;
+    line-height: 1.1;
     padding: 1rem;
     background-color: #222034;
     color: #deeed6;
     border-radius: 4px;
-    display: inline-block;
+    /* A block that scrolls on its own: an inline-block pre cannot shrink
+       below its longest line and stretches the whole page instead. */
+    display: block;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 code {
@@ -94,7 +97,7 @@ code {
 
 blockquote {
     padding-left: 2rem;
-    border-left: 5px solid #eee;
+    border-left: 5px solid var(--border);
     font-style: italic;
 }
 
@@ -152,7 +155,7 @@ footer {
     color: var(--text);
 }
 
-@media (min-width: 1140px) {
+@media (min-width: 1141px) {
     .container {
         margin-left: 14rem;
         margin-right: 4rem;
@@ -160,7 +163,7 @@ footer {
     }
 }
 
-@media (min-width: 800px) and (max-width: 1140px) {
+@media (min-width: 801px) and (max-width: 1140px) {
     .container {
         margin-left: 6rem;
         margin-right: 4rem;
@@ -174,8 +177,87 @@ footer {
     }
 }
 
+/* Hamburger button: hidden on wide screens and whenever JavaScript is
+   unavailable (the "js" class on <html> is set from <head>). */
+.nav-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    background: none;
+    color: var(--text);
+    cursor: pointer;
+}
+
+.nav-toggle:hover {
+    background-color: var(--a-bg);
+}
+
+.nav-toggle::before {
+    content: "";
+    display: block;
+    width: 28px;
+    height: 28px;
+    background-color: currentColor;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'%3E%3Cline x1='3' y1='6' x2='21' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='12' x2='21' y2='12'%3E%3C/line%3E%3Cline x1='3' y1='18' x2='21' y2='18'%3E%3C/line%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'%3E%3Cline x1='3' y1='6' x2='21' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='12' x2='21' y2='12'%3E%3C/line%3E%3Cline x1='3' y1='18' x2='21' y2='18'%3E%3C/line%3E%3C/svg%3E");
+}
+
+.nav-toggle[aria-expanded="true"]::before {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'%3E%3Cline x1='5' y1='5' x2='19' y2='19'%3E%3C/line%3E%3Cline x1='19' y1='5' x2='5' y2='19'%3E%3C/line%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'%3E%3Cline x1='5' y1='5' x2='19' y2='19'%3E%3C/line%3E%3Cline x1='19' y1='5' x2='5' y2='19'%3E%3C/line%3E%3C/svg%3E");
+}
+
+/* Narrow screens: collapse the menu behind the hamburger button, one
+   item per line.  Without JavaScript the plain wrapped list is kept. */
+@media (max-width: 800px) {
+    html.js .nav-toggle {
+        display: inline-flex;
+    }
+
+    html.js .nav ul {
+        display: block;
+        width: 100%;
+    }
+
+    html.js .nav li {
+        display: none;
+        padding: 0;
+    }
+
+    html.js .nav li:first-child {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    html.js .nav.open li:not(:first-child):not(.fade-text) {
+        display: block;
+    }
+
+    html.js .nav li a {
+        display: block;
+        padding: 0.6rem 0;
+    }
+
+    html.js .nav li:first-child a {
+        display: inline;
+        padding: 0;
+    }
+}
+
 .fade-text {
-    color: #ddd;
+    color: var(--border);
 }
 
 /* The menu ends with a blank <li class="fade-text">.  With its padding it
@@ -214,16 +296,6 @@ footer {
     font-size: 80%;
 }
 
-.tags ul {
-    display: inline-block;
-    padding-left: 0.5rem;
-}
-
-.tags li {
-    display: inline-block;
-    padding: 0.5rem;
-}
-
 .post img, .centered-image {
     display: block;
     max-width: 100%;
@@ -238,13 +310,6 @@ footer {
     margin: 0 auto;
     padding: 0px;
     max-width: 100%;
-}
-
-.caption {
-    text-align: center;
-    margin: 0;
-    margin-left: 4rem;
-    margin-right: 4rem;
 }
 
 /* Syntax Highlighting */
@@ -285,34 +350,6 @@ footer {
 .hide {
     display: none;
 }
-
-/* Tag pages */
-
-/* Tags navigation */
-.tags ul {
-    display: inline;
-    padding-left: 0.5rem;
-    margin: 0;
-}
-
-.tags li {
-    display: inline-block;
-    margin-right: 0.5rem;
-    padding: 0.2rem 0.5rem;
-    background-color: var(--a-bg);
-    border-radius: 3px;
-}
-
-.tags li a {
-    text-decoration: none;
-}
-
-.tags li a:hover {
-    text-decoration: underline;
-    background-color: transparent;
-}
-
-/* Tag pages CSS additions for lovergine.com */
 
 /* Tags navigation */
 .tags ul {
@@ -444,7 +481,6 @@ footer {
   justify-content: space-between;
   width: 100%;
   margin: 1.5rem 0;
-  position: relative;
 }
 
 .pagination .prev {
@@ -492,19 +528,13 @@ h2.site-title {
     margin-bottom: 1.5rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
-    /* border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;*/
     font-size: 90%;
-	text-align: center;
+    text-align: center;
 }
 
 .mastodon-comments p {
     margin: 0;
     color: var(--d);
-}
-
-.mastodon-comments a {
-    color: var(--a);
 }
 
 /* Planet pages */
@@ -571,7 +601,7 @@ h2.site-title {
 
 .wiki-backlinks {
     margin-top: 3rem;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--border);
     padding-top: 1rem;
 }
 
